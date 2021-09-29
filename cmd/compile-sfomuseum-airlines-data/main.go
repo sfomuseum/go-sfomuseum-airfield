@@ -4,7 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"flag"
-	"github.com/sfomuseum/go-sfomuseum-airlines/sfomuseum"
+	"fmt"
+	"github.com/sfomuseum/go-sfomuseum-airfield/airlines/sfomuseum"
 	"io"
 	"log"
 	"os"
@@ -12,10 +13,12 @@ import (
 
 func main() {
 
+	default_target := fmt.Sprintf("data/%s", sfomuseum.DATA_JSON)
+	
 	iterator_uri := flag.String("iterator-uri", "repo://", "...")
 	iterator_source := flag.String("iterator-source", "/usr/local/data/sfomuseum-data-enterprise", "...")
 
-	target := flag.String("target", "data/sfomuseum.json", "The path to write SFO Museum airline data.")
+	target := flag.String("target", default_target, "The path to write SFO Museum airline data.")
 	stdout := flag.Bool("stdout", false, "Emit SFO Museum aircraft data to SDOUT.")
 
 	flag.Parse()

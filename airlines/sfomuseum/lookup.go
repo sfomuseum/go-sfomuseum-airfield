@@ -48,9 +48,20 @@ func NewSFOMuseumLookup(ctx context.Context, uri string) (airlines.AirlinesLooku
 		return nil, fmt.Errorf("Failed to parse URI, %w", err)
 	}
 
-	// Reminder: u.Scheme is used by the airlines.AirlinesLookup constructor
+	// account for both
+	// airfield.NewLookup(ctx, "airlines://sfomuseum/github")
+	// airlines.NewAirLinesLookup(ctx, "sfomuseum://github")
+	
+	var source string
 
 	switch u.Host {
+	case "sfomuseum":
+		source = u.Path
+	default:
+		source = u.Host
+	}
+	
+	switch source {
 	case "iterator":
 
 		q := u.Query()

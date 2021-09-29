@@ -44,13 +44,23 @@ func NewFlySFOLookup(ctx context.Context, uri string) (airlines.AirlinesLookup, 
 		return nil, fmt.Errorf("Failed to parse URI, %w", err)
 	}
 
-	// Reminder: u.Scheme is used by the airlines.Lookup constructor
+	// account for both
+	// airfield.NewLookup(ctx, "airlines://flysfo/github")
+	// airlines.NewAirLinesLookup(ctx, "flysfo://github")
+	
+	var source string
 
 	switch u.Host {
+	case "sfomuseum":
+		source = u.Path
+	default:
+		source = u.Host
+	}
+
+	switch source {
 	case "github":
 
-		data_url := fmt.Sprintf("https://raw.githubusercontent.com/sfomuseum/go-sfomuseum-airlines/main/data/%s", DATA_JSON)
-		rsp, err := http.Get(data_url)
+		rsp, err := http.Get(DATA_GITHUB)
 
 		if err != nil {
 			return nil, fmt.Errorf("Failed to load remote data from Github, %w", err)

@@ -2,7 +2,7 @@ package flysfo
 
 import (
 	"context"
-	"github.com/sfomuseum/go-sfomuseum-airlines"
+	"github.com/sfomuseum/go-sfomuseum-airfield"
 	"testing"
 )
 
@@ -15,7 +15,7 @@ func TestSFOMuseumLookup(t *testing.T) {
 
 	ctx := context.Background()
 
-	lu, err := airlines.NewLookup(ctx, "flysfo://")
+	lu, err := airfield.NewLookup(ctx, "airlines://flysfo")
 
 	if err != nil {
 		t.Fatalf("Failed to create lookup, %v", err)
@@ -35,8 +35,8 @@ func TestSFOMuseumLookup(t *testing.T) {
 
 		a := results[0].(*Airline)
 
-		if a.WOFID != wofid {
-			t.Fatalf("Invalid match for '%s', expected %d but got %d", code, wofid, a.WOFID)
+		if a.WhosOnFirstId != wofid {
+			t.Fatalf("Invalid match for '%s', expected %d but got %d", code, wofid, a.WhosOnFirstId)
 		}
 	}
 }

@@ -15,7 +15,7 @@ type AirlinesLookup interface {
 
 func init() {
 	ctx := context.Background()
-	airfield.RegisterLookup(ctx, "airline", newLookup)
+	airfield.RegisterLookup(ctx, "airlines", newLookup)
 }
 
 func newLookup(ctx context.Context, uri string) (airfield.Lookup, error) {

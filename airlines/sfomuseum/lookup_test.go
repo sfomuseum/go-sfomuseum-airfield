@@ -2,7 +2,7 @@ package sfomuseum
 
 import (
 	"context"
-	"github.com/sfomuseum/go-sfomuseum-airfield/airlines"
+	"github.com/sfomuseum/go-sfomuseum-airfield"
 	"testing"
 )
 
@@ -19,18 +19,15 @@ func TestSFOMuseumLookup(t *testing.T) {
 	}
 
 	schemes := []string{
-		"sfomuseum://",
-		"sfomuseum://github",
-		// Leaving as an example because it depends on github.com/whosonfirst/go-whosonfirst-iterate-git
-		// which we don't need to make a requirement for this package
-		// "sfomuseum://iterator?uri=git%3A%2F%2F%3Finclude%3Dproperties.sfomuseum%3Aplacetype%3Dairline&source=https://github.com/sfomuseum-data/sfomuseum-data-enterprise.git,
+		"airlines://sfomuseum",
+		"airlines://sfomuseum/github",
 	}
 
 	ctx := context.Background()
 
 	for _, s := range schemes {
 
-		lu, err := airlines.NewLookup(ctx, s)
+		lu, err := airfield.NewLookup(ctx, s)
 
 		if err != nil {
 			t.Fatalf("Failed to create lookup for '%s', %v", s, err)
