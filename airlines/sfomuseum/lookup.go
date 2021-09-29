@@ -51,7 +51,7 @@ func NewSFOMuseumLookup(ctx context.Context, uri string) (airlines.AirlinesLooku
 	// account for both
 	// airfield.NewLookup(ctx, "airlines://sfomuseum/github")
 	// airlines.NewAirLinesLookup(ctx, "sfomuseum://github")
-	
+
 	var source string
 
 	switch u.Host {
@@ -60,7 +60,7 @@ func NewSFOMuseumLookup(ctx context.Context, uri string) (airlines.AirlinesLooku
 	default:
 		source = u.Host
 	}
-	
+
 	switch source {
 	case "iterator":
 

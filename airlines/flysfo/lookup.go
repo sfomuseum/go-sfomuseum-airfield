@@ -47,7 +47,7 @@ func NewFlySFOLookup(ctx context.Context, uri string) (airlines.AirlinesLookup, 
 	// account for both
 	// airfield.NewLookup(ctx, "airlines://flysfo/github")
 	// airlines.NewAirLinesLookup(ctx, "flysfo://github")
-	
+
 	var source string
 
 	switch u.Host {

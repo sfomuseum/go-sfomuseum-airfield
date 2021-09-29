@@ -14,7 +14,7 @@ import (
 func main() {
 
 	default_target := fmt.Sprintf("data/%s", sfomuseum.DATA_JSON)
-	
+
 	iterator_uri := flag.String("iterator-uri", "repo://", "...")
 	iterator_source := flag.String("iterator-source", "/usr/local/data/sfomuseum-data-enterprise", "...")
 
