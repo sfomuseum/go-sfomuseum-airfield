@@ -1,4 +1,4 @@
-package airfield
+package airlines
 
 import (
 	"context"
@@ -6,9 +6,13 @@ import (
 	"net/url"
 )
 
+// I do not look this, returning []interface{} instead of something
+// less-obtuse but there isn't really any commonality (yet...) between
+// the Airline thingies defined in the wikipedia/sfomuseum packages...
+// (20190430/thisisaaronland)
+
 type Lookup interface {
 	Find(context.Context, string) ([]interface{}, error)
-	// FindIsCurrent(context.Context, string) ([]interface{}, error)
 	Append(context.Context, interface{}) error
 }
 
