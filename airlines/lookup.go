@@ -6,6 +6,7 @@ import (
 	"github.com/aaronland/go-roster"
 	"github.com/sfomuseum/go-sfomuseum-airfield"
 	"net/url"
+	"strings"
 )
 
 type AirlinesLookup interface {
@@ -26,11 +27,20 @@ func newLookup(ctx context.Context, uri string) (airfield.Lookup, error) {
 		return nil, fmt.Errorf("Failed to parse URI, %w", err)
 	}
 
+	// Rewrite airlines://sfomuseum/github as sfomuseum://github
+
 	u.Scheme = u.Host
 	u.Host = ""
 
-	uri = u.String()
-	return NewAirlinesLookup(ctx, uri)
+	path := strings.TrimLeft(u.Path, "/")
+	p := strings.Split(path, "/")
+
+	if len(p) > 0 {
+		u.Host = p[0]
+		u.Path = strings.Join(p[1:], "/")
+	}
+
+	return NewAirlinesLookup(ctx, u.String())
 }
 
 var airlines_lookup_roster roster.Roster

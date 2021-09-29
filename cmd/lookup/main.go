@@ -3,6 +3,7 @@ package main
 import (
 	_ "github.com/sfomuseum/go-sfomuseum-airfield/airlines/flysfo"
 	_ "github.com/sfomuseum/go-sfomuseum-airfield/airlines/sfomuseum"
+	_ "github.com/sfomuseum/go-sfomuseum-airfield/airports/sfomuseum"
 )
 
 import (

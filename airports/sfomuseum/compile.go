@@ -15,9 +15,9 @@ import (
 	"sync"
 )
 
-func CompileAirlinesData(ctx context.Context, iterator_uri string, iterator_sources ...string) ([]*Airline, error) {
+func CompileAirportsData(ctx context.Context, iterator_uri string, iterator_sources ...string) ([]*Airport, error) {
 
-	lookup := make([]*Airline, 0)
+	lookup := make([]*Airport, 0)
 	mu := new(sync.RWMutex)
 
 	iter_cb := func(ctx context.Context, fh io.ReadSeeker, args ...interface{}) error {
@@ -51,18 +51,19 @@ func CompileAirlinesData(ctx context.Context, iterator_uri string, iterator_sour
 			return fmt.Errorf("Failed load feature from %s, %w", path, err)
 		}
 
-		// TO DO : https://github.com/sfomuseum/go-sfomuseum-airlines-tools/issues/1
+		// TO DO : https://github.com/sfomuseum/go-sfomuseum-airports-tools/issues/1
 
 		pt := sfomuseum_props.Placetype(f)
 
-		if pt != "airline" {
+		if pt != "airport" {
+			//log.Println("NOT AN AIRPORT", whosonfirst.Id(f), whosonfirst.Name(f), pt)
 			return nil
 		}
 
 		wof_id := whosonfirst.Id(f)
 		name := whosonfirst.Name(f)
 
-		sfom_id := utils.Int64Property(f.Bytes(), []string{"properties.sfomuseum:airline_id"}, -1)
+		sfom_id := utils.Int64Property(f.Bytes(), []string{"properties.sfomuseum:airport_id"}, -1)
 
 		concordances, err := whosonfirst.Concordances(f)
 
@@ -70,34 +71,22 @@ func CompileAirlinesData(ctx context.Context, iterator_uri string, iterator_sour
 			return err
 		}
 
-		a := Airline{
-			WOFID:       wof_id,
-			SFOMuseumID: int(sfom_id),
-			Name:        name,
+		a := Airport{
+			WhosOnFirstId: wof_id,
+			SFOMuseumID:   int(sfom_id),
+			Name:          name,
 		}
 
 		iata_code, ok := concordances["iata:code"]
 
-		if ok {
+		if ok && iata_code != "" {
 			a.IATACode = iata_code
 		}
 
 		icao_code, ok := concordances["icao:code"]
 
-		if ok {
+		if ok && icao_code != "" {
 			a.ICAOCode = icao_code
-		}
-
-		callsign, ok := concordances["icao:callsign"]
-
-		if ok {
-			a.ICAOCallsign = callsign
-		}
-
-		id, ok := concordances["wd:id"]
-
-		if ok {
-			a.WikidataID = id
 		}
 
 		mu.Lock()

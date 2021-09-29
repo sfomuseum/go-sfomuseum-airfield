@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/sfomuseum/go-sfomuseum-airfield/airlines"
+	"github.com/sfomuseum/go-sfomuseum-airfield/airports"
 	"github.com/sfomuseum/go-sfomuseum-airfield/data"
 	"io"
 	"net/http"
@@ -24,23 +24,23 @@ var lookup_init_err error
 type SFOMuseumLookupFunc func(context.Context)
 
 type SFOMuseumLookup struct {
-	airlines.AirlinesLookup
+	airports.AirportsLookup
 }
 
 func init() {
 	ctx := context.Background()
-	airlines.RegisterAirlinesLookup(ctx, "sfomuseum", NewSFOMuseumLookup)
+	airports.RegisterAirportsLookup(ctx, "sfomuseum", NewSFOMuseumLookup)
 
 	lookup_idx = int64(0)
 }
 
-// NewLookup will return an `airlines.AirlinesLookup` instance. By default the lookup table is derived from precompiled (embedded) data in `data/sfomuseum.json`
+// NewSFOMuseumLookup will return an `airports.AirportsLookup` instance. By default the lookup table is derived from precompiled (embedded) data in `data/airports-sfomuseum.json`
 // by passing in `sfomuseum://` as the URI. It is also possible to create a new lookup table with the following URI options:
 // 	`sfomuseum://github`
-// This will cause the lookup table to be derived from the data stored at https://raw.githubusercontent.com/sfomuseum/go-sfomuseum-airlines/main/data/sfomuseum.json. This might be desirable if there have been updates to the underlying data that are not reflected in the locally installed package's pre-compiled data.
+// This will cause the lookup table to be derived from the data stored at https://raw.githubusercontent.com/sfomuseum/go-sfomuseum-airfield/main/data/airports-sfomuseum.json. This might be desirable if there have been updates to the underlying data that are not reflected in the locally installed package's pre-compiled data.
 //	`sfomuseum://iterator?uri={URI}&source={SOURCE}`
 // This will cause the lookup table to be derived, at runtime, from data emitted by a `whosonfirst/go-whosonfirst-iterate` instance. `{URI}` should be a valid `whosonfirst/go-whosonfirst-iterate/iterator` URI and `{SOURCE}` is one or more URIs for the iterator to process.
-func NewSFOMuseumLookup(ctx context.Context, uri string) (airlines.AirlinesLookup, error) {
+func NewSFOMuseumLookup(ctx context.Context, uri string) (airports.AirportsLookup, error) {
 
 	u, err := url.Parse(uri)
 
@@ -49,8 +49,8 @@ func NewSFOMuseumLookup(ctx context.Context, uri string) (airlines.AirlinesLooku
 	}
 
 	// Account for both:
-	// airfield.NewLookup(ctx, "airlines://sfomuseum/github")
-	// airlines.NewAirLinesLookup(ctx, "sfomuseum://github")
+	// airfield.NewLookup(ctx, "airports://sfomuseum/github")
+	// airports.NewAirportsLookup(ctx, "sfomuseum://github")
 
 	var source string
 
@@ -96,17 +96,17 @@ func NewSFOMuseumLookup(ctx context.Context, uri string) (airlines.AirlinesLooku
 	}
 }
 
-// NewLookup will return an `SFOMuseumLookupFunc` function instance that, when invoked, will populate an `airlines.AirlinesLookup` instance with data stored in `r`.
+// NewSFOMuseumLookup will return an `SFOMuseumLookupFunc` function instance that, when invoked, will populate an `airports.AirportsLookup` instance with data stored in `r`.
 // `r` will be closed when the `SFOMuseumLookupFunc` function instance is invoked.
 // It is assumed that the data in `r` will be formatted in the same way as the procompiled (embedded) data stored in `data/sfomuseum.json`.
 func NewSFOMuseumLookupFuncWithReader(ctx context.Context, r io.ReadCloser) SFOMuseumLookupFunc {
 
 	defer r.Close()
 
-	var airlines_list []*Airline
+	var airports_list []*Airport
 
 	dec := json.NewDecoder(r)
-	err := dec.Decode(&airlines_list)
+	err := dec.Decode(&airports_list)
 
 	if err != nil {
 
@@ -117,17 +117,17 @@ func NewSFOMuseumLookupFuncWithReader(ctx context.Context, r io.ReadCloser) SFOM
 		return lookup_func
 	}
 
-	return NewSFOMuseumLookupFuncWithAirlines(ctx, airlines_list)
+	return NewSFOMuseumLookupFuncWithAirports(ctx, airports_list)
 }
 
-// NewLookup will return an `SFOMuseumLookupFunc` function instance that, when invoked, will populate an `airlines.AirlinesLookup` instance with data stored in `airlines_list`.
-func NewSFOMuseumLookupFuncWithAirlines(ctx context.Context, airlines_list []*Airline) SFOMuseumLookupFunc {
+// NewSFOMuseumLookup will return an `SFOMuseumLookupFunc` function instance that, when invoked, will populate an `airports.AirportsLookup` instance with data stored in `airports_list`.
+func NewSFOMuseumLookupFuncWithAirports(ctx context.Context, airports_list []*Airport) SFOMuseumLookupFunc {
 
 	lookup_func := func(ctx context.Context) {
 
 		table := new(sync.Map)
 
-		for _, data := range airlines_list {
+		for _, data := range airports_list {
 
 			select {
 			case <-ctx.Done():
@@ -145,8 +145,8 @@ func NewSFOMuseumLookupFuncWithAirlines(ctx context.Context, airlines_list []*Ai
 	return lookup_func
 }
 
-// NewLookupWithLookupFunc will return an `airlines.AirlinesLookup` instance derived by data compiled using `lookup_func`.
-func NewSFOMuseumLookupWithLookupFunc(ctx context.Context, lookup_func SFOMuseumLookupFunc) (airlines.AirlinesLookup, error) {
+// NewSFOMuseumLookupWithLookupFunc will return an `airports.AirportsLookup` instance derived by data compiled using `lookup_func`.
+func NewSFOMuseumLookupWithLookupFunc(ctx context.Context, lookup_func SFOMuseumLookupFunc) (airports.AirportsLookup, error) {
 
 	fn := func() {
 		lookup_func(ctx)
@@ -162,15 +162,15 @@ func NewSFOMuseumLookupWithLookupFunc(ctx context.Context, lookup_func SFOMuseum
 	return &l, nil
 }
 
-func NewSFOMuseumLookupFromIterator(ctx context.Context, iterator_uri string, iterator_sources ...string) (airlines.AirlinesLookup, error) {
+func NewSFOMuseumLookupFromIterator(ctx context.Context, iterator_uri string, iterator_sources ...string) (airports.AirportsLookup, error) {
 
-	airline_data, err := CompileAirlinesData(ctx, iterator_uri, iterator_sources...)
+	airports_list, err := CompileAirportsData(ctx, iterator_uri, iterator_sources...)
 
 	if err != nil {
-		return nil, fmt.Errorf("Failed to compile airline data, %w", err)
+		return nil, fmt.Errorf("Failed to compile airport data, %w", err)
 	}
 
-	lookup_func := NewSFOMuseumLookupFuncWithAirlines(ctx, airline_data)
+	lookup_func := NewSFOMuseumLookupFuncWithAirports(ctx, airports_list)
 	return NewSFOMuseumLookupWithLookupFunc(ctx, lookup_func)
 }
 
@@ -182,31 +182,31 @@ func (l *SFOMuseumLookup) Find(ctx context.Context, code string) ([]interface{},
 		return nil, fmt.Errorf("Code '%s' not found", code)
 	}
 
-	airline := make([]interface{}, 0)
+	airport := make([]interface{}, 0)
 
 	for _, p := range pointers.([]string) {
 
 		if !strings.HasPrefix(p, "pointer:") {
-			return nil, fmt.Errorf("Invalid pointer, %s", p)
+			return nil, fmt.Errorf("Invalid pointer, '%s'", p)
 		}
 
 		row, ok := lookup_table.Load(p)
 
 		if !ok {
-			return nil, fmt.Errorf("Invalid pointer, %s", p)
+			return nil, fmt.Errorf("Invalid pointer, '%s'", p)
 		}
 
-		airline = append(airline, row.(*Airline))
+		airport = append(airport, row.(*Airport))
 	}
 
-	return airline, nil
+	return airport, nil
 }
 
 func (l *SFOMuseumLookup) Append(ctx context.Context, data interface{}) error {
-	return appendData(ctx, lookup_table, data.(*Airline))
+	return appendData(ctx, lookup_table, data.(*Airport))
 }
 
-func appendData(ctx context.Context, table *sync.Map, data *Airline) error {
+func appendData(ctx context.Context, table *sync.Map, data *Airport) error {
 
 	idx := atomic.AddInt64(&lookup_idx, 1)
 
@@ -219,7 +219,6 @@ func appendData(ctx context.Context, table *sync.Map, data *Airline) error {
 	possible_codes := []string{
 		data.IATACode,
 		data.ICAOCode,
-		data.ICAOCallsign,
 		str_wofid,
 		str_sfomid,
 	}
