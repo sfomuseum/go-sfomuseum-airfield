@@ -3,12 +3,11 @@ package sfomuseum
 import (
 	"context"
 	"fmt"
-	"github.com/sfomuseum/go-sfomuseum-geojson/feature"
-	"github.com/whosonfirst/go-whosonfirst-geojson-v2/properties/whosonfirst"
-	"github.com/whosonfirst/go-whosonfirst-geojson-v2/utils"
+	"github.com/whosonfirst/go-whosonfirst-feature/properties"
 	"github.com/whosonfirst/go-whosonfirst-iterate/emitter"
 	"github.com/whosonfirst/go-whosonfirst-iterate/iterator"
 	"github.com/whosonfirst/go-whosonfirst-uri"
+	"github.com/tidwall/gjson"
 	"io"
 	"sync"
 )
@@ -46,43 +45,55 @@ func CompileAircraftData(ctx context.Context, iterator_uri string, iterator_sour
 			return nil
 		}
 
-		f, err := feature.LoadFeatureFromReader(fh)
+		body, err := io.ReadAll(fh)
 
 		if err != nil {
-			return fmt.Errorf("Failed load feature from %s, %w", path, err)
+			return fmt.Errorf("Failed to read '%s', %w", path, err)
 		}
-
-		// TO DO: https://github.com/sfomuseum/go-sfomuseum-aircraft-tools/issues/1
-
-		wof_id := whosonfirst.Id(f)
-		name := whosonfirst.Name(f)
-
-		sfom_id := utils.Int64Property(f.Bytes(), []string{"properties.sfomuseum:aircraft_id"}, -1)
-
-		concordances, err := whosonfirst.Concordances(f)
+		
+		wof_id, err := properties.Id(body)
 
 		if err != nil {
-			return err
+			return fmt.Errorf("Failed to derive ID, %w", err)
 		}
 
+		wof_name, err := properties.Name(body)
+
+		if err != nil {
+			return fmt.Errorf("Failed to derive name, %w", err)
+		}
+
+		sfom_id := int64(-1)
+		
+		sfom_rsp := gjson.GetBytes(body, "properties.sfomuseum:aircraft_id")
+
+		if sfom_rsp.Exists(){
+			sfom_id = sfom_rsp.Int()
+		}
+		
 		a := &Aircraft{
 			WhosOnFirstId: wof_id,
-			SFOMuseumID:   int(sfom_id),
-			Name:          name,
+			SFOMuseumID:   int64(sfom_id),
+			Name:          wof_name,
 		}
 
-		code, ok := concordances["icao:designator"]
+		concordances := properties.Concordances(body)
 
-		if ok {
-			a.ICAODesignator = code
+		if concordances != nil {
+
+			code, ok := concordances["icao:designator"]
+			
+			if ok {
+				a.ICAODesignator = code
+			}
+			
+			id, ok := concordances["wd:id"]
+			
+			if ok {
+				a.WikidataID = id
+			}
 		}
-
-		id, ok := concordances["wd:id"]
-
-		if ok {
-			a.WikidataID = id
-		}
-
+		
 		mu.Lock()
 		lookup = append(lookup, a)
 		mu.Unlock()

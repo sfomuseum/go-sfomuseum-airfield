@@ -7,7 +7,7 @@ import (
 type Aircraft struct {
 	WhosOnFirstId  int64  `json:"wof:id"`
 	Name           string `json:"wof:name"`
-	SFOMuseumID    int    `json:"sfomuseum:aircraft_id"`
+	SFOMuseumID    int64    `json:"sfomuseum:aircraft_id"`
 	ICAODesignator string `json:"icao:designator,omitempty"`
 	WikidataID     string `json:"wd:id,omitempty"`
 }
