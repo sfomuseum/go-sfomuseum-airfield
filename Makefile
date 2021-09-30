@@ -1,3 +1,6 @@
+cli:
+	go build -mod vendor -o bin/lookup cmd/lookup/main.go
+
 compile:
 	@make compile-airlines
 	@make compile-airports
