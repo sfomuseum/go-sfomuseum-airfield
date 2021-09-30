@@ -3,11 +3,11 @@ package sfomuseum
 import (
 	"context"
 	"fmt"
+	"github.com/tidwall/gjson"
 	"github.com/whosonfirst/go-whosonfirst-feature/properties"
 	"github.com/whosonfirst/go-whosonfirst-iterate/emitter"
 	"github.com/whosonfirst/go-whosonfirst-iterate/iterator"
 	"github.com/whosonfirst/go-whosonfirst-uri"
-	"github.com/tidwall/gjson"
 	"io"
 	"sync"
 )
@@ -50,7 +50,7 @@ func CompileAircraftData(ctx context.Context, iterator_uri string, iterator_sour
 		if err != nil {
 			return fmt.Errorf("Failed to read '%s', %w", path, err)
 		}
-		
+
 		wof_id, err := properties.Id(body)
 
 		if err != nil {
@@ -64,16 +64,16 @@ func CompileAircraftData(ctx context.Context, iterator_uri string, iterator_sour
 		}
 
 		sfom_id := int64(-1)
-		
+
 		sfom_rsp := gjson.GetBytes(body, "properties.sfomuseum:aircraft_id")
 
-		if sfom_rsp.Exists(){
+		if sfom_rsp.Exists() {
 			sfom_id = sfom_rsp.Int()
 		}
-		
+
 		a := &Aircraft{
 			WhosOnFirstId: wof_id,
-			SFOMuseumID:   int64(sfom_id),
+			SFOMuseumID:   sfom_id,
 			Name:          wof_name,
 		}
 
@@ -82,18 +82,18 @@ func CompileAircraftData(ctx context.Context, iterator_uri string, iterator_sour
 		if concordances != nil {
 
 			code, ok := concordances["icao:designator"]
-			
+
 			if ok {
 				a.ICAODesignator = code
 			}
-			
+
 			id, ok := concordances["wd:id"]
-			
+
 			if ok {
 				a.WikidataID = id
 			}
 		}
-		
+
 		mu.Lock()
 		lookup = append(lookup, a)
 		mu.Unlock()

@@ -7,7 +7,7 @@ import (
 type Airline struct {
 	WhosOnFirstId int64  `json:"wof:id"`
 	Name          string `json:"wof:name"`
-	SFOMuseumID   int    `json:"sfomuseum:airline_id"`
+	SFOMuseumID   int64  `json:"sfomuseum:airline_id"`
 	IATACode      string `json:"iata:code,omitempty"`
 	ICAOCode      string `json:"icao:code,omitempty"`
 	ICAOCallsign  string `json:"icao:callsign,omitempty"`
