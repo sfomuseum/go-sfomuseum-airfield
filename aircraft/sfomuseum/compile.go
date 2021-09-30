@@ -54,13 +54,19 @@ func CompileAircraftData(ctx context.Context, iterator_uri string, iterator_sour
 		wof_id, err := properties.Id(body)
 
 		if err != nil {
-			return fmt.Errorf("Failed to derive ID, %w", err)
+			return fmt.Errorf("Failed to derive ID for %s, %w", path, err)
 		}
 
 		wof_name, err := properties.Name(body)
 
 		if err != nil {
-			return fmt.Errorf("Failed to derive name, %w", err)
+			return fmt.Errorf("Failed to derive name for %s, %w", path, err)
+		}
+
+		fl, err := properties.IsCurrent(body)
+
+		if err != nil {
+			return fmt.Errorf("Failed to determine is current for %s, %v", path, err)
 		}
 
 		sfom_id := int64(-1)
@@ -75,6 +81,7 @@ func CompileAircraftData(ctx context.Context, iterator_uri string, iterator_sour
 			WhosOnFirstId: wof_id,
 			SFOMuseumID:   sfom_id,
 			Name:          wof_name,
+			IsCurrent:     fl.Flag(),
 		}
 
 		concordances := properties.Concordances(body)

@@ -68,14 +68,14 @@ func CompileAirlinesData(ctx context.Context, iterator_uri string, iterator_sour
 		if !ok {
 			return nil
 		}
-		
+
 		fl, err := properties.IsCurrent(body)
 
 		if err != nil {
 			return fmt.Errorf("Failed to determine whether %s is current, %v", path, err)
 		}
-		
-		if !fl.IsTrue() || !fl.IsKnown(){
+
+		if !fl.IsTrue() || !fl.IsKnown() {
 			return nil
 		}
 

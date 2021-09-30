@@ -10,6 +10,7 @@ type Aircraft struct {
 	SFOMuseumID    int64  `json:"sfomuseum:aircraft_id"`
 	ICAODesignator string `json:"icao:designator,omitempty"`
 	WikidataID     string `json:"wd:id,omitempty"`
+	IsCurrent      int64  `json:"mz:is_current"`
 }
 
 func (a *Aircraft) String() string {

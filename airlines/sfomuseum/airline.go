@@ -12,6 +12,7 @@ type Airline struct {
 	ICAOCode      string `json:"icao:code,omitempty"`
 	ICAOCallsign  string `json:"icao:callsign,omitempty"`
 	WikidataID    string `json:"wd:id,omitempty"`
+	IsCurrent     int64  `json:"mz:is_current"`
 }
 
 func (a *Airline) String() string {
