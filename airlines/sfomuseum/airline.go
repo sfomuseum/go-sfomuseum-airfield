@@ -16,5 +16,5 @@ type Airline struct {
 }
 
 func (a *Airline) String() string {
-	return fmt.Sprintf("%s %s %s \"%s\" %d", a.IATACode, a.ICAOCode, a.ICAOCallsign, a.Name, a.WhosOnFirstId)
+	return fmt.Sprintf("%s %s %s \"%s\" %d (%d)", a.IATACode, a.ICAOCode, a.ICAOCallsign, a.Name, a.WhosOnFirstId, a.IsCurrent)
 }
