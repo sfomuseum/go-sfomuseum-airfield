@@ -3,10 +3,8 @@ package sfomuseum
 import (
 	"context"
 	"fmt"
-	"github.com/sfomuseum/go-sfomuseum-geojson/feature"
-	sfomuseum_props "github.com/sfomuseum/go-sfomuseum-geojson/properties/sfomuseum"
-	"github.com/whosonfirst/go-whosonfirst-geojson-v2/properties/whosonfirst"
-	"github.com/whosonfirst/go-whosonfirst-geojson-v2/utils"
+	"github.com/tidwall/gjson"
+	"github.com/whosonfirst/go-whosonfirst-feature/properties"
 	"github.com/whosonfirst/go-whosonfirst-iterate/emitter"
 	"github.com/whosonfirst/go-whosonfirst-iterate/iterator"
 	"github.com/whosonfirst/go-whosonfirst-uri"
@@ -45,52 +43,63 @@ func CompileAirportsData(ctx context.Context, iterator_uri string, iterator_sour
 			return nil
 		}
 
-		f, err := feature.LoadFeatureFromReader(fh)
+		body, err := io.ReadAll(fh)
 
 		if err != nil {
-			return fmt.Errorf("Failed load feature from %s, %w", path, err)
+			return fmt.Errorf("Failed to read %s, %w", path, err)
 		}
 
-		// TO DO : https://github.com/sfomuseum/go-sfomuseum-airports-tools/issues/1
+		pt_rsp := gjson.GetBytes(body, "properties.sfomuseum:placetype")
 
-		pt := sfomuseum_props.Placetype(f)
-
-		if pt != "airport" {
-			//log.Println("NOT AN AIRPORT", whosonfirst.Id(f), whosonfirst.Name(f), pt)
+		if pt_rsp.String() != "airport" {
 			return nil
 		}
 
-		wof_id := whosonfirst.Id(f)
-		name := whosonfirst.Name(f)
-
-		sfom_id := utils.Int64Property(f.Bytes(), []string{"properties.sfomuseum:airport_id"}, -1)
-
-		concordances, err := whosonfirst.Concordances(f)
+		wof_id, err := properties.Id(body)
 
 		if err != nil {
-			return err
+			return fmt.Errorf("Failed to derive ID, %w", err)
 		}
 
-		a := Airport{
+		wof_name, err := properties.Name(body)
+
+		if err != nil {
+			return fmt.Errorf("Failed to derive name, %w", err)
+		}
+
+		sfom_id := int64(-1)
+
+		sfom_rsp := gjson.GetBytes(body, "properties.sfomuseum:airport_id")
+
+		if sfom_rsp.Exists() {
+			sfom_id = sfom_rsp.Int()
+		}
+
+		a := &Airport{
 			WhosOnFirstId: wof_id,
-			SFOMuseumID:   int(sfom_id),
-			Name:          name,
+			SFOMuseumID:   sfom_id,
+			Name:          wof_name,
 		}
 
-		iata_code, ok := concordances["iata:code"]
+		concordances := properties.Concordances(body)
 
-		if ok && iata_code != "" {
-			a.IATACode = iata_code
+		if concordances != nil {
+			
+			iata_code, ok := concordances["iata:code"]
+			
+			if ok && iata_code != "" {
+				a.IATACode = iata_code
+			}
+			
+			icao_code, ok := concordances["icao:code"]
+			
+			if ok && icao_code != "" {
+				a.ICAOCode = icao_code
+			}
 		}
-
-		icao_code, ok := concordances["icao:code"]
-
-		if ok && icao_code != "" {
-			a.ICAOCode = icao_code
-		}
-
+		
 		mu.Lock()
-		lookup = append(lookup, &a)
+		lookup = append(lookup, a)
 		mu.Unlock()
 
 		return nil

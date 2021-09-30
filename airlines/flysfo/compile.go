@@ -3,10 +3,8 @@ package flysfo
 import (
 	"context"
 	"fmt"
-	"github.com/sfomuseum/go-sfomuseum-geojson/feature"
-	sfomuseum_props "github.com/sfomuseum/go-sfomuseum-geojson/properties/sfomuseum"
-	"github.com/whosonfirst/go-whosonfirst-geojson-v2/properties/whosonfirst"
-	"github.com/whosonfirst/go-whosonfirst-geojson-v2/utils"
+	"github.com/tidwall/gjson"
+	"github.com/whosonfirst/go-whosonfirst-feature/properties"
 	"github.com/whosonfirst/go-whosonfirst-iterate/emitter"
 	"github.com/whosonfirst/go-whosonfirst-iterate/iterator"
 	"github.com/whosonfirst/go-whosonfirst-uri"
@@ -47,28 +45,22 @@ func CompileAirlinesData(ctx context.Context, iterator_uri string, iterator_sour
 			return nil
 		}
 
-		f, err := feature.LoadFeatureFromReader(fh)
+		body, err := io.ReadAll(fh)
 
 		if err != nil {
-			return fmt.Errorf("Failed load feature from %s, %w", path, err)
+			return fmt.Errorf("Failed to read %s, %w", path, err)
 		}
 
-		pt := sfomuseum_props.Placetype(f)
+		pt_rsp := gjson.GetBytes(body, "properties.sfomuseum:placetype")
 
-		if pt != "airline" {
+		if pt_rsp.String() != "airline" {
 			return nil
 		}
 
-		is_current := utils.Int64Property(f.Bytes(), []string{"properties.mz:is_current"}, -1)
+		concordances := properties.Concordances(body)
 
-		if is_current != 1 {
+		if concordances == nil {
 			return nil
-		}
-
-		concordances, err := whosonfirst.Concordances(f)
-
-		if err != nil {
-			return err
 		}
 
 		iata_code, ok := concordances["flysfo:code"]
@@ -76,24 +68,33 @@ func CompileAirlinesData(ctx context.Context, iterator_uri string, iterator_sour
 		if !ok {
 			return nil
 		}
+		
+		fl, err := properties.IsCurrent(body)
 
-		wof_id := whosonfirst.Id(f)
-		name := whosonfirst.Name(f)
-
-		w, ok := seen.Load(iata_code)
-
-		if ok {
-			log.Println("WARNING", iata_code, w, wof_id)
+		if err != nil {
+			return fmt.Errorf("Failed to determine whether %s is current, %v", path, err)
+		}
+		
+		if !fl.IsTrue() || !fl.IsKnown(){
+			return nil
 		}
 
-		seen.Store(iata_code, wof_id)
+		wof_id, err := properties.Id(body)
 
-		// sfom_id := utils.Int64Property(f.Bytes(), []string{"properties.sfomuseum:airline_id"}, -1)
+		if err != nil {
+			return fmt.Errorf("Failed to derive ID, %w", err)
+		}
+
+		wof_name, err := properties.Name(body)
+
+		if err != nil {
+			return fmt.Errorf("Failed to derive name, %w", err)
+		}
 
 		a := Airline{
 			WhosOnFirstId: wof_id,
 			FlysfoID:      iata_code,
-			Name:          name,
+			Name:          wof_name,
 			IATACode:      iata_code,
 		}
 
