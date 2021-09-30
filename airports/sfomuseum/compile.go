@@ -83,7 +83,7 @@ func CompileAirportsData(ctx context.Context, iterator_uri string, iterator_sour
 
 		a := &Airport{
 			WhosOnFirstId: wof_id,
-			SFOMuseumID:   sfom_id,
+			SFOMuseumId:   sfom_id,
 			Name:          wof_name,
 			IsCurrent:     fl.Flag(),
 		}

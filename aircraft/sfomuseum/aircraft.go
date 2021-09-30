@@ -7,12 +7,12 @@ import (
 type Aircraft struct {
 	WhosOnFirstId  int64  `json:"wof:id"`
 	Name           string `json:"wof:name"`
-	SFOMuseumID    int64  `json:"sfomuseum:aircraft_id"`
+	SFOMuseumId    int64  `json:"sfomuseum:aircraft_id"`
 	ICAODesignator string `json:"icao:designator,omitempty"`
-	WikidataID     string `json:"wd:id,omitempty"`
+	WikidataId     string `json:"wd:id,omitempty"`
 	IsCurrent      int64  `json:"mz:is_current"`
 }
 
 func (a *Aircraft) String() string {
-	return fmt.Sprintf("%d %s \"%s\" (%d)", a.WhosOnFirstId, a.ICAODesignator, a.Name, a.IsCurrent)
+	return fmt.Sprintf("%s \"%s\" %d (%d) Is current: %d", a.ICAODesignator, a.Name, a.WhosOnFirstId, a.SFOMuseumId, a.IsCurrent)
 }

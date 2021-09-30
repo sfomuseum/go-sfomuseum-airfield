@@ -216,7 +216,7 @@ func appendData(ctx context.Context, table *sync.Map, data *Aircraft) error {
 	table.Store(pointer, data)
 
 	str_wofid := strconv.FormatInt(data.WhosOnFirstId, 10)
-	str_sfomid := strconv.FormatInt(data.SFOMuseumID, 10)
+	str_sfomid := strconv.FormatInt(data.SFOMuseumId, 10)
 
 	possible_codes := []string{
 		data.ICAODesignator,

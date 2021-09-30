@@ -79,7 +79,7 @@ func CompileAircraftData(ctx context.Context, iterator_uri string, iterator_sour
 
 		a := &Aircraft{
 			WhosOnFirstId: wof_id,
-			SFOMuseumID:   sfom_id,
+			SFOMuseumId:   sfom_id,
 			Name:          wof_name,
 			IsCurrent:     fl.Flag(),
 		}
@@ -97,7 +97,7 @@ func CompileAircraftData(ctx context.Context, iterator_uri string, iterator_sour
 			id, ok := concordances["wd:id"]
 
 			if ok {
-				a.WikidataID = id
+				a.WikidataId = id
 			}
 		}
 
