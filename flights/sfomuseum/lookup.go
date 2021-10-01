@@ -4,12 +4,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/sfomuseum/go-sfomuseum-airfield/flights"
 	"github.com/tidwall/gjson"
-	"github.com/sfomuseum/go-sfomuseum-airfield/flights"	
 	"github.com/whosonfirst/go-whosonfirst-iterate/emitter"
 	"github.com/whosonfirst/go-whosonfirst-iterate/iterator"
 	"github.com/whosonfirst/go-whosonfirst-uri"
 	"io"
+	"net/url"
 	"strconv"
 	"strings"
 	"sync"
@@ -30,9 +31,46 @@ type FlightsLookup struct {
 }
 
 func init() {
-	// ctx := context.Background()
-	// RegisterLookup(ctx, "flights", NewSFOMuseumLookup)
+	ctx := context.Background()
+	flights.RegisterFlightsLookup(ctx, "flights", NewSFOMuseumLookup)
 	lookup_idx = int64(0)
+}
+
+func NewSFOMuseumLookup(ctx context.Context, uri string) (flights.FlightsLookup, error) {
+
+	u, err := url.Parse(uri)
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to parse URI, %w", err)
+	}
+
+	// Account for both:
+	// airfield.NewLookup(ctx, "flights://sfomuseum/iterator")
+	// airlines.NewAirLinesLookup(ctx, "sfomuseum://iterator")
+
+	var source string
+
+	switch u.Host {
+	case "sfomuseum":
+		source = u.Path
+	default:
+		source = u.Host
+	}
+
+	switch source {
+	case "iterator":
+
+		q := u.Query()
+
+		iterator_uri := q.Get("uri")
+		iterator_sources := q["source"]
+
+		return NewSFOMuseumLookupFromIterator(ctx, iterator_uri, iterator_sources...)
+
+	default:
+
+		return nil, fmt.Errorf("Invalid or unsupported constructor (URI)")
+	}
 }
 
 // NewSFOMuseumLookup will return an `FlightsLookupFunc` function instance that, when invoked, will populate an `architecture.Lookup` instance with data stored in `r`.
