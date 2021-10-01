@@ -32,7 +32,7 @@ type FlightsLookup struct {
 
 func init() {
 	ctx := context.Background()
-	flights.RegisterFlightsLookup(ctx, "flights", NewSFOMuseumLookup)
+	flights.RegisterFlightsLookup(ctx, "sfomuseum", NewSFOMuseumLookup)
 	lookup_idx = int64(0)
 }
 
