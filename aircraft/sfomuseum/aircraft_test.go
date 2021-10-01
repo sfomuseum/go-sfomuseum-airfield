@@ -11,7 +11,7 @@ func TestFindCurrentAircraft(t *testing.T) {
 	// are still marked as mz:is_current=-1 and I still need to establish the rules
 	// for which ones to mark as mz:is_current=1
 	// (20211001/thisisaaronland)
-	
+
 	tests := map[string]int64{
 		// "B744": 1159289915,
 	}

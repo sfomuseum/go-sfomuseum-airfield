@@ -9,6 +9,7 @@ import (
 type Airline struct {
 	WhosOnFirstId int64  `json:"wof:id"`
 	Name          string `json:"wof:name"`
+	Role          string `json:"sfomuseum:airline_role"`
 	SFOMuseumId   int64  `json:"sfomuseum:airline_id"`
 	IATACode      string `json:"iata:code,omitempty"`
 	ICAOCode      string `json:"icao:code,omitempty"`
@@ -22,7 +23,7 @@ func (a *Airline) String() string {
 }
 
 // Return the current Airline matching 'code'. Multiple matches throw an error.
-func FindCurrentAirline(ctx context.Context, code string) (*Airline, error) {
+func FindCurrentAirline(ctx context.Context, code string, roles ...string) (*Airline, error) {
 
 	lookup, err := NewSFOMuseumLookup(ctx, "")
 
@@ -30,16 +31,40 @@ func FindCurrentAirline(ctx context.Context, code string) (*Airline, error) {
 		return nil, fmt.Errorf("Failed to create new lookup, %w", err)
 	}
 
-	return FindCurrentAirlineWithLookup(ctx, lookup, code)
+	return FindCurrentAirlineWithLookup(ctx, lookup, code, roles...)
 }
 
 // Return the current Airline matching 'code' with a custom airfield.Lookup instance. Multiple matches throw an error.
-func FindCurrentAirlineWithLookup(ctx context.Context, lookup airfield.Lookup, code string) (*Airline, error) {
+func FindCurrentAirlineWithLookup(ctx context.Context, lookup airfield.Lookup, code string, roles ...string) (*Airline, error) {
 
 	current, err := FindAirlinesCurrentWithLookup(ctx, lookup, code)
 
 	if err != nil {
 		return nil, err
+	}
+
+	if len(roles) > 0 {
+
+		candidates := make([]*Airline, 0)
+
+		for _, a := range current {
+
+			ok := false
+
+			for _, r := range roles {
+
+				if a.Role == r {
+					ok = true
+					break
+				}
+			}
+
+			if ok {
+				candidates = append(candidates, a)
+			}
+		}
+
+		current = candidates
 	}
 
 	switch len(current) {

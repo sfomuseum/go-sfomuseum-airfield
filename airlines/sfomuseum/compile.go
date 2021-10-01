@@ -81,10 +81,13 @@ func CompileAirlinesData(ctx context.Context, iterator_uri string, iterator_sour
 			sfom_id = sfom_rsp.Int()
 		}
 
+		role_rsp := gjson.GetBytes(body, "properties.sfomuseum:airline_role")
+
 		a := &Airline{
 			WhosOnFirstId: wof_id,
 			SFOMuseumId:   sfom_id,
 			Name:          wof_name,
+			Role:          role_rsp.String(),
 			IsCurrent:     fl.Flag(),
 		}
 
