@@ -222,6 +222,11 @@ func appendData(ctx context.Context, table *sync.Map, data *Airline) error {
 		data.ICAOCallsign,
 		str_wofid,
 		str_sfomid,
+		fmt.Sprintf("iata:code=%s", data.IATACode),
+		fmt.Sprintf("icao:code=%s", data.ICAOCode),
+		fmt.Sprintf("icao:callsign=%s", data.ICAOCallsign),
+		fmt.Sprintf("wof:id=%s", str_wofid),
+		fmt.Sprintf("sfomuseum:airline_id=%s", str_sfomid),
 	}
 
 	for _, code := range possible_codes {

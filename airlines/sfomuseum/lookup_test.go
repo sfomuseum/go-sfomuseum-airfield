@@ -9,13 +9,18 @@ import (
 func TestSFOMuseumLookup(t *testing.T) {
 
 	wofid_tests := map[string]int64{
-		"AC":         1159283597,
-		"ACA":        1159283597,
-		"AIR CANADA": 1159283597,
-		"MOV":        1360700753,
-		"NN":         1360700753,
-		"77":         1159283643,
-		"AHC":        1159283643,
+		"AC":                       1159283597,
+		"ACA":                      1159283597,
+		"AIR CANADA":               1159283597,
+		"MOV":                      1360700753,
+		"NN":                       1360700753,
+		"77":                       1159283643,
+		"AHC":                      1159283643,
+		"icao:callsign=SUNSTATE":   1159285043,
+		"icao:callsign=DELTA":      1159284261,
+		"icao:callsign=KLM":        1159284613,
+		"wof:id=1159284389":        1159284389,
+		"sfomuseum:airline_id=412": 1159284389,
 	}
 
 	schemes := []string{

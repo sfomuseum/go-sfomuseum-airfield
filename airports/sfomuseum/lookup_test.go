@@ -9,10 +9,15 @@ import (
 func TestSFOMuseumLookup(t *testing.T) {
 
 	wofid_tests := map[string]int64{
-		"YUL":  102554351,
-		"EGLL": 102556703,
-		"162":  1360695653,
-		"260":  102525431,
+		"YUL":                      102554351,
+		"EGLL":                     102556703,
+		"162":                      1360695653,
+		"260":                      102525431,
+		"icao:code=KSFO":           102527513,
+		"icao:code=CYVR":           102555307,
+		"iata:code=YVR":            102555307,
+		"sfomuseum:airport_id=174": 102525799,
+		"wof:id=102533269":         102533269,
 	}
 
 	ctx := context.Background()

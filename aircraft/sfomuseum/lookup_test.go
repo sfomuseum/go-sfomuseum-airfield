@@ -9,11 +9,14 @@ import (
 func TestSFOMuseumLookup(t *testing.T) {
 
 	wofid_tests := map[string]int64{
-		"B39M": 1528104577,
-		"12":   1159289381,
-		"A306": 1159289391,
-		"17":   1159289391,
-		"B744": 1159289915,
+		"B39M":                     1528104577,
+		"12":                       1159289381,
+		"A306":                     1159289391,
+		"17":                       1159289391,
+		"B744":                     1159289915,
+		"icao:designator=B744":     1159289915,
+		"wof:id=1159289915":        1159289915,
+		"sfomuseum:aircraft_id=24": 1159289407,
 	}
 
 	ctx := context.Background()
