@@ -17,6 +17,8 @@ func TestSFOMuseumLookup(t *testing.T) {
 		"icao:designator=B744":     1159289915,
 		"wof:id=1159289915":        1159289915,
 		"sfomuseum:aircraft_id=24": 1159289407,
+		"Q3317803":                 1159289407,
+		"wikidata:id=Q3317803":     1159289407,
 	}
 
 	ctx := context.Background()

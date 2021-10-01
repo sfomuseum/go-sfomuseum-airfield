@@ -16,7 +16,7 @@ type Aircraft struct {
 }
 
 func (a *Aircraft) String() string {
-	return fmt.Sprintf("%s \"%s\" %d (%d) Is current: %d", a.ICAODesignator, a.Name, a.WhosOnFirstId, a.SFOMuseumId, a.IsCurrent)
+	return fmt.Sprintf("%s \"%s\" %d (%d) (%s) Is current: %d", a.ICAODesignator, a.Name, a.WhosOnFirstId, a.SFOMuseumId, a.WikidataId, a.IsCurrent)
 }
 
 // Return the current Aircraft matching 'code'. Multiple matches throw an error.

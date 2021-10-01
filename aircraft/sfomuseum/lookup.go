@@ -219,12 +219,20 @@ func appendData(ctx context.Context, table *sync.Map, data *Aircraft) error {
 	str_sfomid := strconv.FormatInt(data.SFOMuseumId, 10)
 
 	possible_codes := []string{
-		data.ICAODesignator,
 		str_wofid,
 		str_sfomid,
-		fmt.Sprintf("icao:designator=%s", data.ICAODesignator),
 		fmt.Sprintf("wof:id=%s", str_wofid),
 		fmt.Sprintf("sfomuseum:aircraft_id=%s", str_sfomid),
+	}
+
+	if data.ICAODesignator != "" {
+		possible_codes = append(possible_codes, data.ICAODesignator)
+		possible_codes = append(possible_codes, fmt.Sprintf("icao:designator=%s", data.ICAODesignator))
+	}
+
+	if data.WikidataId != "" {
+		possible_codes = append(possible_codes, data.WikidataId)
+		possible_codes = append(possible_codes, fmt.Sprintf("wikidata:id=%s", data.WikidataId))
 	}
 
 	for _, code := range possible_codes {

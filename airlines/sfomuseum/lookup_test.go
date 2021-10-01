@@ -21,6 +21,8 @@ func TestSFOMuseumLookup(t *testing.T) {
 		"icao:callsign=KLM":        1159284613,
 		"wof:id=1159284389":        1159284389,
 		"sfomuseum:airline_id=412": 1159284389,
+		"Q174769":                  1159285413,
+		"wikidata:id=Q174769":      1159285413,
 	}
 
 	schemes := []string{

@@ -12,11 +12,12 @@ type Airport struct {
 	SFOMuseumId   int64  `json:"sfomuseum:airport_id"`
 	IATACode      string `json:"iata:code"`
 	ICAOCode      string `json:"icao:code"`
+	WikidataId    string `json:"wd:id,omitempty"`
 	IsCurrent     int64  `json:"mz:is_current"`
 }
 
 func (a *Airport) String() string {
-	return fmt.Sprintf("%s %s \"%s\" %d (%d) Is Current: %d", a.IATACode, a.ICAOCode, a.Name, a.WhosOnFirstId, a.SFOMuseumId, a.IsCurrent)
+	return fmt.Sprintf("%s %s \"%s\" %d (%d) (%s) Is Current: %d", a.IATACode, a.ICAOCode, a.Name, a.WhosOnFirstId, a.SFOMuseumId, a.WikidataId, a.IsCurrent)
 }
 
 // Return the current Airport matching 'code'. Multiple matches throw an error.

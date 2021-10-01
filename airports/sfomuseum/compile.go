@@ -103,6 +103,12 @@ func CompileAirportsData(ctx context.Context, iterator_uri string, iterator_sour
 			if ok && icao_code != "" {
 				a.ICAOCode = icao_code
 			}
+
+			id, ok := concordances["wd:id"]
+
+			if ok {
+				a.WikidataId = id
+			}
 		}
 
 		mu.Lock()

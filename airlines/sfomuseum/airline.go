@@ -19,7 +19,7 @@ type Airline struct {
 }
 
 func (a *Airline) String() string {
-	return fmt.Sprintf("%s %s %s \"%s\" %d (%d) Is current: %d", a.IATACode, a.ICAOCode, a.ICAOCallsign, a.Name, a.WhosOnFirstId, a.SFOMuseumId, a.IsCurrent)
+	return fmt.Sprintf("%s %s %s \"%s\" %d (%d) (%s) Is current: %d", a.IATACode, a.ICAOCode, a.ICAOCallsign, a.Name, a.WhosOnFirstId, a.SFOMuseumId, a.WikidataId, a.IsCurrent)
 }
 
 // Return the current Airline matching 'code'. Multiple matches throw an error.

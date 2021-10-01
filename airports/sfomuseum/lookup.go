@@ -217,14 +217,25 @@ func appendData(ctx context.Context, table *sync.Map, data *Airport) error {
 	str_sfomid := strconv.FormatInt(data.SFOMuseumId, 10)
 
 	possible_codes := []string{
-		data.IATACode,
-		data.ICAOCode,
 		str_wofid,
 		str_sfomid,
-		fmt.Sprintf("iata:code=%s", data.IATACode),
-		fmt.Sprintf("icao:code=%s", data.ICAOCode),
 		fmt.Sprintf("wof:id=%s", str_wofid),
 		fmt.Sprintf("sfomuseum:airport_id=%s", str_sfomid),
+	}
+
+	if data.IATACode != "" {
+		possible_codes = append(possible_codes, data.IATACode)
+		possible_codes = append(possible_codes, fmt.Sprintf("iata:code=%s", data.IATACode))
+	}
+
+	if data.ICAOCode != "" {
+		possible_codes = append(possible_codes, data.ICAOCode)
+		possible_codes = append(possible_codes, fmt.Sprintf("icao:code=%s", data.ICAOCode))
+	}
+
+	if data.WikidataId != "" {
+		possible_codes = append(possible_codes, data.WikidataId)
+		possible_codes = append(possible_codes, fmt.Sprintf("wikidata:id=%s", data.WikidataId))
 	}
 
 	for _, code := range possible_codes {
