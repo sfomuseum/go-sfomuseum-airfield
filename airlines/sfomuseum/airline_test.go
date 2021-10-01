@@ -33,10 +33,12 @@ func TestFindCurrentPassengerAirlineWithRoles(t *testing.T) {
 
 	passenger_tests := map[string]int64{
 		"AA": 1159283849,
+		"AF": 1159283627,
 	}
 
 	cargo_tests := map[string]int64{
 		"AA": 1159283857,
+		"AF": 1159283629,
 	}
 
 	ctx := context.Background()
