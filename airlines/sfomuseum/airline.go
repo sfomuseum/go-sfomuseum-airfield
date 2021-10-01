@@ -1,7 +1,9 @@
 package sfomuseum
 
 import (
+	"context"
 	"fmt"
+	"github.com/sfomuseum/go-sfomuseum-airfield"
 )
 
 type Airline struct {
@@ -17,4 +19,74 @@ type Airline struct {
 
 func (a *Airline) String() string {
 	return fmt.Sprintf("%s %s %s \"%s\" %d (%d) Is current: %d", a.IATACode, a.ICAOCode, a.ICAOCallsign, a.Name, a.WhosOnFirstId, a.SFOMuseumId, a.IsCurrent)
+}
+
+// Return the current Airline matching 'code'. Multiple matches throw an error.
+func FindCurrentAirline(ctx context.Context, code string) (*Airline, error) {
+
+	lookup, err := NewSFOMuseumLookup(ctx, "")
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to create new lookup, %w", err)
+	}
+
+	return FindCurrentAirlineWithLookup(ctx, lookup, code)
+}
+
+// Return the current Airline matching 'code' with a custom airfield.Lookup instance. Multiple matches throw an error.
+func FindCurrentAirlineWithLookup(ctx context.Context, lookup airfield.Lookup, code string) (*Airline, error) {
+
+	current, err := FindAirlinesCurrentWithLookup(ctx, lookup, code)
+
+	if err != nil {
+		return nil, err
+	}
+
+	switch len(current) {
+	case 0:
+		return nil, NotFound{code}
+	case 1:
+		return current[0], nil
+	default:
+		return nil, MultipleCandidates{code}
+	}
+
+}
+
+// Returns all Airline instances matching 'code' that are marked as current.
+func FindAirlinesCurrent(ctx context.Context, code string) ([]*Airline, error) {
+
+	lookup, err := NewSFOMuseumLookup(ctx, "")
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to create new lookup, %w", err)
+	}
+
+	return FindAirlinesCurrentWithLookup(ctx, lookup, code)
+}
+
+// Returns all Airline instances matching 'code' that are marked as current with a custom airfield.Lookup instance.
+func FindAirlinesCurrentWithLookup(ctx context.Context, lookup airfield.Lookup, code string) ([]*Airline, error) {
+
+	rsp, err := lookup.Find(ctx, code)
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to find %s, %w", code, err)
+	}
+
+	current := make([]*Airline, 0)
+
+	for _, r := range rsp {
+
+		g := r.(*Airline)
+
+		// if g.IsCurrent == 0 {
+		if g.IsCurrent != 1 {
+			continue
+		}
+
+		current = append(current, g)
+	}
+
+	return current, nil
 }

@@ -8,7 +8,6 @@ import (
 
 type Lookup interface {
 	Find(context.Context, string) ([]interface{}, error)
-	// FindIsCurrent(context.Context, string) ([]interface{}, error)
 	Append(context.Context, interface{}) error
 }
 
