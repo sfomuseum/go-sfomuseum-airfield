@@ -5,8 +5,7 @@ import (
 	"fmt"
 	"github.com/tidwall/gjson"
 	"github.com/whosonfirst/go-whosonfirst-feature/properties"
-	"github.com/whosonfirst/go-whosonfirst-iterate/emitter"
-	"github.com/whosonfirst/go-whosonfirst-iterate/iterator"
+	"github.com/whosonfirst/go-whosonfirst-iterate/v2/iterator"
 	"github.com/whosonfirst/go-whosonfirst-uri"
 	"io"
 	_ "log"
@@ -18,19 +17,13 @@ func CompileAirlinesData(ctx context.Context, iterator_uri string, iterator_sour
 	lookup := make([]*Airline, 0)
 	mu := new(sync.RWMutex)
 
-	iter_cb := func(ctx context.Context, fh io.ReadSeeker, args ...interface{}) error {
+	iter_cb := func(ctx context.Context, path string, fh io.ReadSeeker, args ...interface{}) error {
 
 		select {
 		case <-ctx.Done():
 			return nil
 		default:
 			// pass
-		}
-
-		path, err := emitter.PathForContext(ctx)
-
-		if err != nil {
-			return fmt.Errorf("Failed to derive path from context, %w", err)
 		}
 
 		_, uri_args, err := uri.ParseURI(path)
