@@ -25,6 +25,10 @@ func TestSFOMuseumLookup(t *testing.T) {
 		"wikidata:id=Q174769":      1159285413,
 	}
 
+	passenger_tests := map[string]int64{
+		"CI": 1159284153,
+	}
+	
 	schemes := []string{
 		"airlines://sfomuseum",
 		"airlines://sfomuseum/github",
@@ -57,6 +61,24 @@ func TestSFOMuseumLookup(t *testing.T) {
 			if a.WhosOnFirstId != wofid {
 				t.Fatalf("Invalid match for '%s', expected %d but got %d using scheme '%s'", code, wofid, a.WhosOnFirstId, s)
 			}
+		}
+
+		for code, wofid := range passenger_tests {
+
+			airline_roles := []string{
+				"",
+			}
+			
+			a, err := FindCurrentAirlineWithLookup(ctx, lu, code, airline_roles...)
+
+			if err != nil {
+				t.Fatalf("Failed to find current airline %s, %v", code, err)
+			}
+			
+			if a.WhosOnFirstId != wofid {
+				t.Fatalf("Invalid match for '%s', expected %d but got %d using scheme '%s'", code, wofid, a.WhosOnFirstId, s)
+			}				
+			
 		}
 	}
 
