@@ -88,19 +88,19 @@ func CompileAirportsData(ctx context.Context, iterator_uri string, iterator_sour
 			iata_code, ok := concordances["iata:code"]
 
 			if ok && iata_code != "" {
-				a.IATACode = iata_code
+				a.IATACode = fmt.Sprintf("%s", iata_code)
 			}
 
 			icao_code, ok := concordances["icao:code"]
 
 			if ok && icao_code != "" {
-				a.ICAOCode = icao_code
+				a.ICAOCode = fmt.Sprintf("%s", icao_code)
 			}
 
 			id, ok := concordances["wd:id"]
 
 			if ok {
-				a.WikidataId = id
+				a.WikidataId = fmt.Sprintf("%s", id)
 			}
 		}
 

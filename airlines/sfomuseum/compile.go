@@ -91,25 +91,25 @@ func CompileAirlinesData(ctx context.Context, iterator_uri string, iterator_sour
 			iata_code, ok := concordances["iata:code"]
 
 			if ok {
-				a.IATACode = iata_code
+				a.IATACode = fmt.Sprintf("%s", iata_code)
 			}
 
 			icao_code, ok := concordances["icao:code"]
 
 			if ok {
-				a.ICAOCode = icao_code
+				a.ICAOCode = fmt.Sprintf("%s", icao_code)
 			}
 
 			callsign, ok := concordances["icao:callsign"]
 
 			if ok {
-				a.ICAOCallsign = callsign
+				a.ICAOCallsign = fmt.Sprintf("%s", callsign)
 			}
 
 			id, ok := concordances["wd:id"]
 
 			if ok {
-				a.WikidataId = id
+				a.WikidataId = fmt.Sprintf("%s", id)
 			}
 		}
 

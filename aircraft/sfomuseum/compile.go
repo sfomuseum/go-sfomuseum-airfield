@@ -84,13 +84,13 @@ func CompileAircraftData(ctx context.Context, iterator_uri string, iterator_sour
 			code, ok := concordances["icao:designator"]
 
 			if ok {
-				a.ICAODesignator = code
+				a.ICAODesignator = fmt.Sprintf("%s", code)
 			}
 
 			id, ok := concordances["wd:id"]
 
 			if ok {
-				a.WikidataId = id
+				a.WikidataId = fmt.Sprintf("%s", id)
 			}
 		}
 

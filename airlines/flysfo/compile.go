@@ -86,9 +86,9 @@ func CompileAirlinesData(ctx context.Context, iterator_uri string, iterator_sour
 
 		a := Airline{
 			WhosOnFirstId: wof_id,
-			FlysfoID:      iata_code,
+			FlysfoID:      fmt.Sprintf("%s", iata_code),
 			Name:          wof_name,
-			IATACode:      iata_code,
+			IATACode:      fmt.Sprintf("%s", iata_code),
 		}
 
 		icao_code, ok := concordances["icao:code"]
@@ -103,7 +103,7 @@ func CompileAirlinesData(ctx context.Context, iterator_uri string, iterator_sour
 				seen.Store(icao_code, wof_id)
 			}
 
-			a.ICAOCode = icao_code
+			a.ICAOCode = fmt.Sprintf("%s", icao_code)
 
 		} else {
 			log.Println("WARNING", "Missing ICAO code", wof_id)
