@@ -1,6 +1,9 @@
 cli:
 	@make cli-lookup
 
+cli-create:
+	go build -mod vendor -o bin/import-airport cmd/import-airport/main.go
+
 cli-lookup:
 	go build -mod vendor -o bin/lookup cmd/lookup/main.go
 
