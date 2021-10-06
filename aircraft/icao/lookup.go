@@ -145,7 +145,7 @@ func (l *ICAOLookup) Find(ctx context.Context, code string) ([]interface{}, erro
 	pointers, ok := lookup_table.Load(code)
 
 	if !ok {
-		return nil, errors.New("Not found")
+		return nil, aircraft.NotFound{code}
 	}
 
 	aircraft := make([]interface{}, 0)

@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/sfomuseum/go-sfomuseum-airfield"
+	"github.com/sfomuseum/go-sfomuseum-airfield/airports"
 )
 
 type Airport struct {
@@ -43,11 +44,11 @@ func FindCurrentAirportWithLookup(ctx context.Context, lookup airfield.Lookup, c
 
 	switch len(current) {
 	case 0:
-		return nil, NotFound{code}
+		return nil, airports.NotFound{code}
 	case 1:
 		return current[0], nil
 	default:
-		return nil, MultipleCandidates{code}
+		return nil, airports.MultipleCandidates{code}
 	}
 
 }

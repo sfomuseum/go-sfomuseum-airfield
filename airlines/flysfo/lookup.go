@@ -154,8 +154,7 @@ func (l *FlySFOLookup) Find(ctx context.Context, code string) ([]interface{}, er
 	pointers, ok := lookup_table.Load(code)
 
 	if !ok {
-		msg := fmt.Sprintf("code '%s' not found", code)
-		return nil, errors.New(msg)
+		return nil, airlines.NotFound{code}
 	}
 
 	airline := make([]interface{}, 0)

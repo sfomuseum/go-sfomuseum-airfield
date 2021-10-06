@@ -1,23 +1,23 @@
-package sfomuseum
+package airports
 
 import (
 	"fmt"
 )
 
-type NotFound struct{ code string }
+type NotFound struct{ Code string }
 
 func (e NotFound) Error() string {
-	return fmt.Sprintf("Aircraft '%s' not found", e.code)
+	return fmt.Sprintf("Airport '%s' not found", e.Code)
 }
 
 func (e NotFound) String() string {
 	return e.Error()
 }
 
-type MultipleCandidates struct{ code string }
+type MultipleCandidates struct{ Code string }
 
 func (e MultipleCandidates) Error() string {
-	return fmt.Sprintf("Multiple candidates for aircraft '%s'", e.code)
+	return fmt.Sprintf("Multiple candidates for airport '%s'", e.Code)
 }
 
 func (e MultipleCandidates) String() string {

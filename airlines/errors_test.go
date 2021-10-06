@@ -1,4 +1,4 @@
-package sfomuseum
+package airlines
 
 import (
 	_ "fmt"
@@ -7,26 +7,26 @@ import (
 
 func TestNotFound(t *testing.T) {
 
-	e := NotFound{"SFO"}
+	e := NotFound{"ACA"}
 
 	if !IsNotFound(e) {
 		t.Fatalf("Expected NotFound error")
 	}
 
-	if e.String() != "Airport 'SFO' not found" {
+	if e.String() != "Airline 'ACA' not found" {
 		t.Fatalf("Invalid stringification")
 	}
 }
 
 func TestMultipleCandidates(t *testing.T) {
 
-	e := MultipleCandidates{"SFO"}
+	e := MultipleCandidates{"ACA"}
 
 	if !IsMultipleCandidates(e) {
 		t.Fatalf("Expected MultipleCandidates error")
 	}
 
-	if e.String() != "Multiple candidates for airport 'SFO'" {
+	if e.String() != "Multiple candidates for airline 'ACA'" {
 		t.Fatalf("Invalid stringification")
 	}
 }

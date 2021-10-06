@@ -1,4 +1,4 @@
-package sfomuseum
+package aircraft
 
 import (
 	_ "fmt"

@@ -179,7 +179,7 @@ func (l *SFOMuseumLookup) Find(ctx context.Context, code string) ([]interface{},
 	pointers, ok := lookup_table.Load(code)
 
 	if !ok {
-		return nil, fmt.Errorf("Code '%s' not found", code)
+		return nil, airports.NotFound{code}
 	}
 
 	airport := make([]interface{}, 0)
