@@ -404,6 +404,8 @@ github.com/whosonfirst/go-whosonfirst-feature v0.0.9 h1:HMwJEArCIHTtOTwI8RUzLvzv
 github.com/whosonfirst/go-whosonfirst-feature v0.0.9/go.mod h1:NhUZ9XDyqQiOipFIBvbmixwfM6jtSzP2lX5dxcWX5uw=
 github.com/whosonfirst/go-whosonfirst-feature v0.0.14 h1:FDQbvOjFswGnGG/9qFbKsGxxnk8XAscsok1ZlIgGPzI=
 github.com/whosonfirst/go-whosonfirst-feature v0.0.14/go.mod h1:NhUZ9XDyqQiOipFIBvbmixwfM6jtSzP2lX5dxcWX5uw=
+github.com/whosonfirst/go-whosonfirst-feature v0.0.15 h1:pedqngP69ZY+Fwg08r8Ec0iCG7l2gdr6APTxTjOxOeE=
+github.com/whosonfirst/go-whosonfirst-feature v0.0.15/go.mod h1:IgCgCT3G0c21YVGNyquPc+pi4YhHxZYb7sOxU5iRUhU=
 github.com/whosonfirst/go-whosonfirst-fetch v0.1.0 h1:YrbWMsMpusJ7rjIVgnjJIQuxjJTNWxtPz6oouk5g7p0=
 github.com/whosonfirst/go-whosonfirst-fetch v0.1.0/go.mod h1:nq9Bd4Vz1cJJtlB1FyKoT/ypdMgARhcz5qqBGNvbWRE=
 github.com/whosonfirst/go-whosonfirst-findingaid v0.0.7 h1:ZEquQ17oq/+iqmJLDxnTqZCLv93Ws7G+z7hguH9YvDU=
