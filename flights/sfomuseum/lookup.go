@@ -154,7 +154,7 @@ func (l *FlightsLookup) Find(ctx context.Context, code string) ([]interface{}, e
 	pointers, ok := lookup_table.Load(code)
 
 	if !ok {
-		return nil, fmt.Errorf("Code '%s' not found", code)
+		return nil, flights.NotFound{code}
 	}
 
 	flights_list := make([]interface{}, 0)
