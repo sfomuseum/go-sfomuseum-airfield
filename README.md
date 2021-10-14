@@ -29,6 +29,10 @@ One alternative approach would be to adopt the [GoCloud `As` model](https://gocl
 
 It's not great. It's just what we're doing today. The goal right now is to expect a certain amount of "rinse and repeat" in the short term while aiming to make each cycle shorter than the last.
 
+### Data storage for "lookups"
+
+The default data storage layer for lookup is an in-memory `sync.Map`. This works well for most cases and enforces a degree of moderation around the size of lookup tables. Another approach would be to use the [philippgille/gokv](https://github.com/philippgille/gokv) package (or equivalent) which is a simple interface with multiple storage backends. TBD..
+
 ## See also
 
 * https://github.com/sfomuseum-data/sfomuseum-data-aircraft
