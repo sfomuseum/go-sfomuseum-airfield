@@ -306,6 +306,7 @@ github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4/go.mod h1:
 github.com/rogpeppe/go-internal v1.3.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=
 github.com/rs/cors v1.7.0/go.mod h1:gFx+x8UowdsKA9AchylcLynDq+nNFfI8FkUZdN/jGCU=
 github.com/sergi/go-diff v1.0.0/go.mod h1:0CfEIISq7TuYL3j771MWULgwwjU+GofnZX9QAmXWZgo=
+github.com/sfomuseum/go-csvdict v0.0.1 h1:Cj8/qXXBJBxCjgorHW5QdRWEGCZpXc+qpdKH9CTRLGU=
 github.com/sfomuseum/go-csvdict v0.0.1/go.mod h1:KGO283kbQh+sqZq84XIj7qr0ImaGY2NX3hedUmAo/sI=
 github.com/sfomuseum/go-edtf v0.2.2/go.mod h1:1rP0EJZ/84j3HO80vGcnG2T9MFBDAFyTNtjrr8cv3T4=
 github.com/sfomuseum/go-edtf v0.2.3 h1:wpcpwl1RD9W/sXFDi4zpoIpQcIwIk8em9CGwa7YWv4g=
@@ -320,6 +321,10 @@ github.com/sfomuseum/go-sfomuseum-airlines v0.4.0 h1:O4CvhdLpsPInUsqolFFu0Clpng4
 github.com/sfomuseum/go-sfomuseum-airlines v0.4.0/go.mod h1:vnIMwnb4967q/q2zaV+2ENkxAOdU7uq4OckRY3teVyw=
 github.com/sfomuseum/go-sfomuseum-export/v2 v2.2.1 h1:LfF5NrNYJs4pcjs4Q9LGMFnF41I7Vj+/51d6UP1azko=
 github.com/sfomuseum/go-sfomuseum-export/v2 v2.2.1/go.mod h1:2jpe+4jCP3cfdcD6pTBmWEzuf5ZR816q2d2xWOQe1w4=
+github.com/sfomuseum/go-sfomuseum-feature v0.0.1 h1:ixdK/aKqHm9YaYC5Qbp8TlZy0isAGX8R0iSn+5IT5YI=
+github.com/sfomuseum/go-sfomuseum-feature v0.0.1/go.mod h1:/7H7llxACc4ItMXwtYs+prXE86loIIHeoW/t9SAexsY=
+github.com/sfomuseum/go-sfomuseum-feature v0.0.2 h1:LbbpHM8Uqxkd1CoWzM9QE+1I7q+5+f1X5jmSjzhilRo=
+github.com/sfomuseum/go-sfomuseum-feature v0.0.2/go.mod h1:/7H7llxACc4ItMXwtYs+prXE86loIIHeoW/t9SAexsY=
 github.com/sfomuseum/go-sfomuseum-geojson v0.1.2 h1:rZM4b1+LrdP3Yzrsoed7Ror33gThictCpgqLmhESfdA=
 github.com/sfomuseum/go-sfomuseum-geojson v0.1.2/go.mod h1:khGRObq7bqsMqr4VWrw0NmZQmTyV82YEYK90w7SF9mk=
 github.com/sfomuseum/go-sfomuseum-geojson v0.1.3 h1:+OyduTQhBgVajdXFqXbX1hxuYY4IK56nYvaI/xtuPcY=
@@ -352,6 +357,8 @@ github.com/tidwall/gjson v1.9.2 h1:SJQc2IgWWKL5V+YGJrr95hjNXFeZzHT2L9Wv1aAb51Q=
 github.com/tidwall/gjson v1.9.2/go.mod h1:2tcKM/KQ/GjiTN7mfTL/HdNmef9Q6AZLaSK2RdfvSjw=
 github.com/tidwall/gjson v1.9.3 h1:hqzS9wAHMO+KVBBkLxYdkEeeFHuqr95GfClRLKlgK0E=
 github.com/tidwall/gjson v1.9.3/go.mod h1:/wbyibRr2FHMks5tjHJ5F8dMZh3AcwJEMf5vlfC0lxk=
+github.com/tidwall/gjson v1.9.4 h1:oNis7dk9Rs3dKJNNigXZT1MTOiJeBtpurn+IpCB75MY=
+github.com/tidwall/gjson v1.9.4/go.mod h1:/wbyibRr2FHMks5tjHJ5F8dMZh3AcwJEMf5vlfC0lxk=
 github.com/tidwall/match v1.0.1/go.mod h1:LujAq0jyVjBy028G1WhWfIzbpQfMO8bBZ6Tyb0+pL9E=
 github.com/tidwall/match v1.0.3 h1:FQUVvBImDutD8wJLN6c5eMzWtjgONK9MwIBCOrUJKeE=
 github.com/tidwall/match v1.0.3/go.mod h1:eRSPERbgtNPcGhD8UCthc6PmLEQXEWd3PRB5JTxsfmM=
