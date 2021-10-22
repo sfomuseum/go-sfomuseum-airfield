@@ -1,11 +1,16 @@
 cli:
 	@make cli-lookup
+	# @make cli-create
+	@make cli-stats
 
 cli-create:
 	go build -mod vendor -o bin/import-airport cmd/import-airport/main.go
 
 cli-lookup:
 	go build -mod vendor -o bin/lookup cmd/lookup/main.go
+
+cli-stats:
+	go build -mod vendor -o bin/tailnumbers cmd/tailnumbers/main.go
 
 compile:
 	@make compile-airlines

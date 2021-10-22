@@ -18,8 +18,8 @@ func TestSFOMuseumLookup(t *testing.T) {
 		"iata:code=YVR":            102555307,
 		"sfomuseum:airport_id=174": 102525799,
 		"wof:id=102533269":         102533269,
-		"COS": 102526247,
-		"CES": 102553239,
+		"COS":                      102526247,
+		"CES":                      102553239,
 	}
 
 	ctx := context.Background()

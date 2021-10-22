@@ -24,6 +24,8 @@ github.com/whosonfirst/go-whosonfirst-feature/properties
 # github.com/whosonfirst/go-whosonfirst-flags v0.4.3
 github.com/whosonfirst/go-whosonfirst-flags
 github.com/whosonfirst/go-whosonfirst-flags/existential
+# github.com/whosonfirst/go-whosonfirst-iterate-git/v2 v2.0.0
+## explicit
 # github.com/whosonfirst/go-whosonfirst-iterate/v2 v2.0.1
 ## explicit
 github.com/whosonfirst/go-whosonfirst-iterate/v2/emitter
