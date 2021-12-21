@@ -6,6 +6,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/sfomuseum/go-sfomuseum-airfield/aircraft/sfomuseum"
+	_ "github.com/whosonfirst/go-whosonfirst-iterate-git/v2"	
 	"io"
 	"log"
 	"os"
