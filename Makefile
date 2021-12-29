@@ -19,11 +19,11 @@ compile:
 	@make cli-lookup
 
 compile-airlines:
-	go run -mod vendor cmd/compile-flysfo-airlines-data/main.go -iterator-uri git:///tmp https://github.com/sfomuseum-data/sfomuseum-data-enterprise.git
-	go run -mod vendor cmd/compile-sfomuseum-airlines-data/main.go  -iterator-uri git:///tmp https://github.com/sfomuseum-data/sfomuseum-data-enterprise.git
+	go run -mod vendor cmd/compile-flysfo-airlines-data/main.go -iterator-uri 'git:///tmp?exclude=properties.edtf:deprecated=.*' https://github.com/sfomuseum-data/sfomuseum-data-enterprise.git
+	go run -mod vendor cmd/compile-sfomuseum-airlines-data/main.go  -iterator-uri 'git:///tmp?exclude=properties.edtf:deprecated=.*' https://github.com/sfomuseum-data/sfomuseum-data-enterprise.git
 
 compile-airports:
-	go run -mod vendor cmd/compile-sfomuseum-airports-data/main.go  -iterator-uri git:///tmp https://github.com/sfomuseum-data/sfomuseum-data-whosonfirst.git
+	go run -mod vendor cmd/compile-sfomuseum-airports-data/main.go  -iterator-uri 'git:///tmp?include=properties.sfomuseum:placetype=airport&exclude=properties.edtf:deprecated=.*' https://github.com/sfomuseum-data/sfomuseum-data-whosonfirst.git
 
 compile-aircraft:
-	go run -mod vendor cmd/compile-sfomuseum-aircraft-data/main.go -iterator-uri git:///tmp https://github.com/sfomuseum-data/sfomuseum-data-aircraft.git
+	go run -mod vendor cmd/compile-sfomuseum-aircraft-data/main.go -iterator-uri 'git:///tmp?exclude=properties.edtf:deprecated=.*' https://github.com/sfomuseum-data/sfomuseum-data-aircraft.git

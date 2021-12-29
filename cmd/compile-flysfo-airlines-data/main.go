@@ -16,7 +16,7 @@ func main() {
 
 	default_target := fmt.Sprintf("data/%s", flysfo.DATA_JSON)
 
-	iterator_uri := flag.String("iterator-uri", "repo://", "A valid whosonfirst/go-whosonfirst-iterate URI.")
+	iterator_uri := flag.String("iterator-uri", "repo://?exclude=properties.edtf:deprecated=.* ", "A valid whosonfirst/go-whosonfirst-iterate URI.")
 	iterator_source := flag.String("iterator-source", "/usr/local/data/sfomuseum-data-enterprise", "A valid whosonfirst/go-whosonfirst-iterate source.")
 
 	target := flag.String("target", default_target, "The path to write FlySFO airline data.")
