@@ -403,6 +403,8 @@ github.com/tidwall/gjson v1.11.0 h1:C16pk7tQNiH6VlCrtIXL1w8GaOsi1X3W8KDkE1BuYd4=
 github.com/tidwall/gjson v1.11.0/go.mod h1:/wbyibRr2FHMks5tjHJ5F8dMZh3AcwJEMf5vlfC0lxk=
 github.com/tidwall/gjson v1.12.1 h1:ikuZsLdhr8Ws0IdROXUS1Gi4v9Z4pGqpX/CvJkxvfpo=
 github.com/tidwall/gjson v1.12.1/go.mod h1:/wbyibRr2FHMks5tjHJ5F8dMZh3AcwJEMf5vlfC0lxk=
+github.com/tidwall/gjson v1.13.0 h1:3TFY9yxOQShrvmjdM76K+jc66zJeT6D3/VFFYCGQf7M=
+github.com/tidwall/gjson v1.13.0/go.mod h1:/wbyibRr2FHMks5tjHJ5F8dMZh3AcwJEMf5vlfC0lxk=
 github.com/tidwall/match v1.0.1/go.mod h1:LujAq0jyVjBy028G1WhWfIzbpQfMO8bBZ6Tyb0+pL9E=
 github.com/tidwall/match v1.0.3 h1:FQUVvBImDutD8wJLN6c5eMzWtjgONK9MwIBCOrUJKeE=
 github.com/tidwall/match v1.0.3/go.mod h1:eRSPERbgtNPcGhD8UCthc6PmLEQXEWd3PRB5JTxsfmM=
@@ -430,6 +432,8 @@ github.com/whosonfirst/go-cache-blob v0.2.0/go.mod h1:CXgKyLBwkinhTLnuPs7/HVxPr0
 github.com/whosonfirst/go-ioutil v0.0.1/go.mod h1:2dS1vWdAIkiHDvDF8fYyjv6k2NISmwaIjJJeEDBEdvg=
 github.com/whosonfirst/go-ioutil v1.0.0 h1:sYpgJx7Wsp76e7PFGa8KKQBvWQW3+HMCWSJbKdD5m14=
 github.com/whosonfirst/go-ioutil v1.0.0/go.mod h1:2dS1vWdAIkiHDvDF8fYyjv6k2NISmwaIjJJeEDBEdvg=
+github.com/whosonfirst/go-ioutil v1.0.1 h1:xITnQgEGdG+Qlph7jPY5htL7UpPSm2wEw1WiUlKTWPc=
+github.com/whosonfirst/go-ioutil v1.0.1/go.mod h1:2dS1vWdAIkiHDvDF8fYyjv6k2NISmwaIjJJeEDBEdvg=
 github.com/whosonfirst/go-reader v0.2.0/go.mod h1:qUhz3OWefOUX/G1nzCEUzJskDjkF+l9oKPOM3K2fAJI=
 github.com/whosonfirst/go-reader v0.5.0/go.mod h1:4ou/wZUss2CDZp27QK5ySDc8p98GVWvUiqqmwEprjgk=
 github.com/whosonfirst/go-reader v0.7.0/go.mod h1:6byB+UfZFNLYFqgsC/EKxTnKY8ahNgGHhUJsTrv1Jig=
@@ -484,6 +488,8 @@ github.com/whosonfirst/go-whosonfirst-iterate v1.2.0 h1:+wouZy6JPIrmLBZdFDqI1UJW
 github.com/whosonfirst/go-whosonfirst-iterate v1.2.0/go.mod h1:MOA6QCBONVG98p8kA8HaoBEAmv83jW4SNTfNhHpP9+o=
 github.com/whosonfirst/go-whosonfirst-iterate-git/v2 v2.0.0 h1:b3FX6x7MPCAAJezADg3ocdB3IIG+2rtPNHYmDJ/mXas=
 github.com/whosonfirst/go-whosonfirst-iterate-git/v2 v2.0.0/go.mod h1:LozmJdowlp9eV0Unp4wtCmkLHL5pp4GAva2sxeQhO88=
+github.com/whosonfirst/go-whosonfirst-iterate-git/v2 v2.1.0 h1:YcQMIilV2CSL8nSFwPdMiQCOZkH7rtVXYU+mdA/wckc=
+github.com/whosonfirst/go-whosonfirst-iterate-git/v2 v2.1.0/go.mod h1:okSGTdAZsnR1zvNow9VwtSn1hmbgEZhNc7EymHaEFRU=
 github.com/whosonfirst/go-whosonfirst-iterate/v2 v2.0.0 h1:w2N2TfsaGcONmQzR4MMxuDvVpt8DuJnlVeS9Eh5Sffk=
 github.com/whosonfirst/go-whosonfirst-iterate/v2 v2.0.0/go.mod h1:NeChKAgakom3sWjPfTnxauSykSzmkfqnEbtuy6nSF6s=
 github.com/whosonfirst/go-whosonfirst-iterate/v2 v2.0.1 h1:YW1Qa9qkhb9NlLGwpEJtcQQYdTa0WoFjrut9lO6jKP4=

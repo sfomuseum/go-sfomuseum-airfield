@@ -71,7 +71,7 @@ func FindAirportsCurrentWithLookup(ctx context.Context, lookup airfield.Lookup, 
 	rsp, err := lookup.Find(ctx, code)
 
 	if err != nil {
-		return nil, fmt.Errorf("Failed to find %s, %w", code, err)
+		return nil, fmt.Errorf("Failed to find (sfomuseum) airport '%s', %w", code, err)
 	}
 
 	current := make([]*Airport, 0)
