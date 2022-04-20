@@ -1,3 +1,5 @@
+// For example:
+//	$> ./bin/create-airline -name 'Flair Airlines' -parent-id 890458485 -iata-code F8 -icao-code FLE -wikidata-id Q4038797 -inception 2005 -cessation ..
 package main
 
 import (
