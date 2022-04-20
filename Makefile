@@ -4,7 +4,7 @@ cli:
 	@make cli-stats
 
 cli-create:
-	go build -mod vendor -o bin/import-airport cmd/import-airport/main.go
+	go build -mod vendor -o bin/create-airline cmd/create-airline/main.go
 
 cli-lookup:
 	go build -mod vendor -o bin/lookup cmd/lookup/main.go
