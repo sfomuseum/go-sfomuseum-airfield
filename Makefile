@@ -27,3 +27,6 @@ compile-airports:
 
 compile-aircraft:
 	go run -mod vendor cmd/compile-sfomuseum-aircraft-data/main.go -iterator-uri 'git:///tmp?exclude=properties.edtf:deprecated=.*' https://github.com/sfomuseum-data/sfomuseum-data-aircraft.git
+
+local-scan:
+	/usr/local/bin/sonar-scanner/bin/sonar-scanner -Dsonar.projectKey=go-sfomuseum-airfield -Dsonar.sources=. -Dsonar.host.url=http://localhost:9000 -Dsonar.login=$(TOKEN)
