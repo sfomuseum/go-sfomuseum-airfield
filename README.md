@@ -87,10 +87,13 @@ Commiting the changes (to the `go-sfomuseum-airfield` package) is also relevant 
 
 ### Adding a new airport to `whosonfirst/whosonfirst-data-admin-*`
 
-Sometimes (not often) there are new airports which haven't been added the Who's On First (WOF) project yet. This is an example of how you might create a basic record for such a record, in this case the Istanbul Airport in Turkey. The first step is to clone the `whosonfirst-data-admin-tr` repository:
+Sometimes (not often) there are new airports which haven't been added the Who's On First (WOF) project yet. This is an example of how you might create a basic record for such a record, in this case [Istanbul Airport](https://spelunker.whosonfirst.org/id/1779770747/) in Turkey. The first step is to clone the `whosonfirst-data-admin-tr` repository:
 
 ```
-$> git clone --depth 1 git@github.com:whosonfirst-data/whosonfirst-data-admin-tr.git
+$> git clone \
+	--depth 1 \
+	git@github.com:whosonfirst-data/whosonfirst-data-admin-tr.git \
+	/usr/local/data/whosonfirst-data-admin-tr
 ```
 
 The next step is to build a SQLite database, with the relevant spatial tables, that we can use to perform "point-in-polygon" operations to determine the new airport's parent and ancestors. Use the tools in the `go-whosonfirst-sqlite-features-index` to create this database:
