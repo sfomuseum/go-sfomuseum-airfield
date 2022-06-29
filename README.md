@@ -49,11 +49,13 @@ Airport data is sourced frome `whosonfirst-data` repositories. The first thing t
 
 _Note that some airports are stored in the `whosonfirst-data-admin-xy` repository because at the time of the "great splitting of the `whosonfirst-data-admin` repository in to per-country repositories" that airport's country of origin wasn't able to be determined. While importing airports that are in the `-admin-xy` repository is a good opportunity to move the record in to the correct repository that is not strictly necessary._ 
 
-Although data is sourced from the Who's On First (WOF) project we keep local copies of WOF records in the `sfomuseum/sfomuseum-data-whosonfirst` repository. The `go-sfomuseum-whosonfirst` package was written to provide tools for importing data from WOF in to the `sfomuseum-data-whosonfirst` repository. For example:
+Although data is sourced from the Who's On First (WOF) project SFO Museum maintains local copies of WOF records in the `sfomuseum/sfomuseum-data-whosonfirst` repository. The `go-sfomuseum-whosonfirst` package was written to provide tools for importing data from WOF in to the `sfomuseum-data-whosonfirst` repository. For example:
 
 ```
 $> cd /usr/local/sfomuseum/go-sfomuseum-whosonfirst
-$> ./bin/import-feature -reader-uri 'github://whosonfirst-data/whosonfirst-data-admin-{COUNTRY}' {ID} {ID} {ID}
+$> ./bin/import-feature \
+	-reader-uri 'github://whosonfirst-data/whosonfirst-data-admin-{COUNTRY}' \
+	{ID} {ID} {ID}
 ```
 
 _Note also this example assumes that there is a checkout for the `sfomuseum-data-whosonfirst` repository in `/usr/local/data`. Consult the package documentation for details._
@@ -83,7 +85,7 @@ $> git push origin main
 
 Commiting the changes (to the `go-sfomuseum-airfield` package) is also relevant because a lot of other tools that use those lookup tables build them on the fly by fetching the serialized tables over the wire from GitHub; this allows us to update airfield data without involving the time-consuming process of updating every other package that uses `go-sfomuseum-airfield`.
 
-### Adding a new airport `whosonfirst/whosonfirst-data-admin-*`
+### Adding a new airport to `whosonfirst/whosonfirst-data-admin-*`
 
 Sometimes (not often) there are new airports which haven't been added the Who's On First (WOF) project yet. This is an example of how you might create a basic record for such a record, in this case the Istanbul Airport in Turkey. The first step is to clone the `whosonfirst-data-admin-tr` repository:
 
@@ -96,7 +98,7 @@ The next step is to build a SQLite database, with the relevant spatial tables, t
 ```
 $> cd /usr/local/whosonfirst/go-whosonfirst-sqlite-features-index
 
-$> bin/sqlite-index-features \
+$> ./bin/sqlite-index-features \
 	-all \
 	-timings \
 	-dsn /usr/local/data/whosonfirst-data-admin-tr.db \
