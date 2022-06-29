@@ -33,6 +33,104 @@ It's not great. It's just what we're doing today. The goal right now is to expec
 
 The default data storage layer for lookup is an in-memory `sync.Map`. This works well for most cases and enforces a degree of moderation around the size of lookup tables. Another approach would be to use the [philippgille/gokv](https://github.com/philippgille/gokv) package (or equivalent) which is a simple interface with multiple storage backends. TBD..
 
+## Airlines
+
+### Adding a new airport to `sfomuseum/sfomuseum-data-enterprise`
+
+Documentation to follow. Please consult the code for [cmd/create-airline](cmd/create-airline/main.go) in the meantime.
+
+## Airports
+
+### Adding a new airport to `sfomuseum/sfomuseum-data-whosonfirst`
+
+Airport data is sourced frome `whosonfirst-data` repositories. The first thing to do is figure out which respository a given airport record is stored in. You can use the Who's On First Spelunker to look up this data:
+
+* https://splelunker.whosonfirst.org/
+
+_Note that some airports are stored in the `whosonfirst-data-admin-xy` repository because at the time of the "great splitting of the `whosonfirst-data-admin` repository in to per-country repositories" that airport's country of origin wasn't able to be determined. While importing airports that are in the `-admin-xy` repository is a good opportunity to move the record in to the correct repository that is not strictly necessary._ 
+
+Although data is sourced from the Who's On First (WOF) project we keep local copies of WOF records in the `sfomuseum/sfomuseum-data-whosonfirst` repository. The `go-sfomuseum-whosonfirst` package was written to provide tools for importing data from WOF in to the `sfomuseum-data-whosonfirst` repository. For example:
+
+```
+$> cd /usr/local/sfomuseum/go-sfomuseum-whosonfirst
+$> ./bin/import-feature -reader-uri 'github://whosonfirst-data/whosonfirst-data-admin-{COUNTRY}' {ID} {ID} {ID}
+```
+
+_Note also this example assumes that there is a checkout for the `sfomuseum-data-whosonfirst` repository in `/usr/local/data`. Consult the package documentation for details._
+
+The `import-feature` tool will do a few things:
+
+* It will retrieve the record for each (WOF) ID specified, as well any relevant ancestors for that ID (region, country)
+* For each ID fetched it will create a corresonding JSON file in the `sfomuseum-data-whosonfirst/properties` folder. These JSON files contain any additional SFO Museum -specific properties or property values that should be overwritten (for example `wof:repo`).
+
+Once the data has been imported make sure to commit your changes:
+
+```
+$> cd /usr/local/data/sfomuseum/sfomuseum-data-whosonfirst
+$> git add {NEW FILES}
+$> git commit -m "Add ..." {NEW FILES}
+$> git push origin main
+```
+
+Commiting the changes is relevant to the `go-sfomuseum-airfield` package which provides pre-compiled lookup tables for things related to the SFO airfield (airlines, aircraft, airports). By default these tables are built by fetching the `sfomuseum/sfomuseum-data-whosonfirst` repository from GitHub. For example:
+
+```
+$> cd /usr/local/sfomuseum/go-sfomuseum-airfield
+$> make compile
+$> git commit -m "recompile data" .
+$> git push origin main
+```
+
+Commiting the changes (to the `go-sfomuseum-airfield` package) is also relevant because a lot of other tools that use those lookup tables build them on the fly by fetching the serialized tables over the wire from GitHub; this allows us to update airfield data without involving the time-consuming process of updating every other package that uses `go-sfomuseum-airfield`.
+
+### Adding a new airport `whosonfirst/whosonfirst-data-admin-*`
+
+Sometimes (not often) there are new airports which haven't been added the Who's On First (WOF) project yet. This is an example of how you might create a basic record for such a record, in this case the Istanbul Airport in Turkey. The first step is to clone the `whosonfirst-data-admin-tr` repository:
+
+```
+$> git clone --depth 1 git@github.com:whosonfirst-data/whosonfirst-data-admin-tr.git
+```
+
+The next step is to build a SQLite database, with the relevant spatial tables, that we can use to perform "point-in-polygon" operations to determine the new airport's parent and ancestors. Use the tools in the `go-whosonfirst-sqlite-features-index` to create this database:
+
+```
+$> cd /usr/local/whosonfirst/go-whosonfirst-sqlite-features-index
+
+$> bin/sqlite-index-features \
+	-all \
+	-timings \
+	-dsn /usr/local/data/whosonfirst-data-admin-tr.db \
+	/usr/local/data/whosonfirst-data-admin-tr
+```
+
+For Turkey it takes about 3-4 minutes to create the `/usr/local/data/whosonfirst-data-admin-tr.db` database. Once the database has been created reference it when invoking the `wof-create` tool in the `whosonfirst/go-whosonfirst-exportify` package. For example:
+
+```
+$> cd /usr/local/whosonfirst/go-whosonfirst-exportify
+
+$> ./bin/wof-create \
+	-writer-uri repo:///usr/local/data/whosonfirst-data-admin-tr \
+	-resolve-hierarchy \
+	-spatial-database-uri 'sqlite://?dsn=/usr/local/data/whosonfirst-data-admin-tr.db' \
+	-geometry '{"type":"Point","coordinates":[28.727778,41.262222]}' \
+	-string-property 'properties.wof:placetype=campus' \
+	-string-property 'properties.wof:country=TR' \
+	-string-property 'properties.wof:name=Istanbul Airport' \
+	-string-property 'properties.wof:repo=whosonfirst-data-admin-tr' \
+	-int-property 'properties.mz:is_current=1' \
+	-string-property 'properties.edtf:inception=2018-10-29' \
+	-string-property 'properties.edtf:cessation=..' \
+	-string-property 'properties.src:geom=wikipedia'
+```
+
+This will create a new, and minimal, record for the Istanbul Airport which can then be updated by hand as necessary. For testing and debugging purposes you can emit the new record to STDOUT but assigning the `-writer-uri` flag like this:
+
+```
+$> ./bin/wof-create -writer-uri stdout:// {OTHER OPTIONS}
+```	
+
+Commit the new record and then import it in to the `sfomuseum-data-whosonfirst` repository as described above. It's worth noting that I have write permissions on all the `*-data` repositories discussed so far. If you don't have write permissions all of these operations can also be accomplished using forks of the relevant repositories (which can then submit PRs upstream).
+
 ## See also
 
 * https://github.com/sfomuseum-data/sfomuseum-data-aircraft
