@@ -24,6 +24,8 @@ func TestSFOMuseumLookup(t *testing.T) {
 		"sfomuseum:airline_id=412": 1159284389,
 		"Q174769":                  1159285413,
 		"wikidata:id=Q174769":      1159285413,
+		"TZP": 1813375131,
+		"ZG": 1813375131,
 	}
 
 	passenger_tests := map[string]int64{
