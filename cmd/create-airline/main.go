@@ -7,12 +7,13 @@ import (
 	_ "embed"
 	"fmt"
 	"log"
+	
 	"github.com/sfomuseum/go-flags/flagset"
 	"github.com/tidwall/gjson"
 	"github.com/whosonfirst/go-reader"
 	sfom_reader "github.com/sfomuseum/go-sfomuseum-reader"
-	sfom_writer "github.com/sfomuseum/go-sfomuseum-writer"	
-	"github.com/whosonfirst/go-writer"
+	sfom_writer "github.com/sfomuseum/go-sfomuseum-writer/v3"	
+	"github.com/whosonfirst/go-writer/v3"
 	"github.com/whosonfirst/go-whosonfirst-export/v2"	
 	"github.com/whosonfirst/go-whosonfirst-uri"
 	"github.com/whosonfirst/go-whosonfirst-feature/properties"		
@@ -113,7 +114,7 @@ func main() {
 		pt, _, err := properties.Centroid(parent_body)
 
 		if err != nil {
-			log.Fatalf("Failed to determine parent centroid, %w", err)
+			log.Fatalf("Failed to determine parent centroid, %v", err)
 		}
 
 		coords := []float64{ pt.X(), pt.Y() }
@@ -146,7 +147,7 @@ func main() {
 		log.Fatalf("Failed to assign properties, %v", err)
 	}
 
-	new_id, err := sfom_writer.WriteFeatureBytes(ctx, wr, body)
+	new_id, err := sfom_writer.WriteBytes(ctx, wr, body)
 
 	if err != nil {
 		log.Fatalf("Failed to write body, %v", err)

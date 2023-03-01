@@ -2,8 +2,9 @@ package sfomuseum
 
 import (
 	"context"
-	"github.com/sfomuseum/go-sfomuseum-airfield"
 	"testing"
+
+	"github.com/sfomuseum/go-sfomuseum-airfield"	
 )
 
 func TestSFOMuseumLookup(t *testing.T) {
@@ -19,7 +20,7 @@ func TestSFOMuseumLookup(t *testing.T) {
 		"sfomuseum:airport_id=174": 102525799,
 		"wof:id=102533269":         102533269,
 		"COS":                      102526247,
-		"CES":                      102553239,
+		"CEB":                      102553239,
 	}
 
 	ctx := context.Background()

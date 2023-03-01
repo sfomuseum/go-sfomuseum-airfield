@@ -3,12 +3,13 @@ package sfomuseum
 import (
 	"context"
 	"fmt"
+	"io"
+	"sync"
+
 	"github.com/tidwall/gjson"
 	"github.com/whosonfirst/go-whosonfirst-feature/properties"
 	"github.com/whosonfirst/go-whosonfirst-iterate/v2/iterator"
-	"github.com/whosonfirst/go-whosonfirst-uri"
-	"io"
-	"sync"
+	"github.com/whosonfirst/go-whosonfirst-uri"	
 )
 
 // CompileAircraftData will generate a list of `Aircraft` struct to be used as the source data for an `SFOMuseumLookup` instance.

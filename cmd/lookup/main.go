@@ -12,8 +12,9 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"github.com/sfomuseum/go-sfomuseum-airfield"
 	"log"
+
+	"github.com/sfomuseum/go-sfomuseum-airfield"	
 )
 
 func main() {

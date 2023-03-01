@@ -4,8 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/sfomuseum/go-sfomuseum-airfield/airports"
-	"github.com/sfomuseum/go-sfomuseum-airfield/data"
 	"io"
 	"net/http"
 	"net/url"
@@ -13,6 +11,9 @@ import (
 	"strings"
 	"sync"
 	"sync/atomic"
+
+	"github.com/sfomuseum/go-sfomuseum-airfield/airports"
+	"github.com/sfomuseum/go-sfomuseum-airfield/data"	
 )
 
 var lookup_table *sync.Map

@@ -2,8 +2,9 @@ package flysfo
 
 import (
 	"context"
-	"github.com/sfomuseum/go-sfomuseum-airfield"
 	"testing"
+
+	"github.com/sfomuseum/go-sfomuseum-airfield"	
 )
 
 func TestSFOMuseumLookup(t *testing.T) {

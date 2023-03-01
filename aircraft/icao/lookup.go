@@ -5,8 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/sfomuseum/go-sfomuseum-airfield/aircraft"
-	"github.com/sfomuseum/go-sfomuseum-airfield/data"
 	"io"
 	_ "log"
 	"net/http"
@@ -14,6 +12,9 @@ import (
 	"strings"
 	"sync"
 	"sync/atomic"
+
+	"github.com/sfomuseum/go-sfomuseum-airfield/aircraft"
+	"github.com/sfomuseum/go-sfomuseum-airfield/data"	
 )
 
 var lookup_table *sync.Map

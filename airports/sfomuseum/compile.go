@@ -3,13 +3,14 @@ package sfomuseum
 import (
 	"context"
 	"fmt"
-	"github.com/tidwall/gjson"
-	"github.com/whosonfirst/go-whosonfirst-feature/properties"
-	"github.com/whosonfirst/go-whosonfirst-iterate/v2/iterator"
-	"github.com/whosonfirst/go-whosonfirst-uri"
 	"io"
 	_ "log"
 	"sync"
+
+	"github.com/tidwall/gjson"
+	"github.com/whosonfirst/go-whosonfirst-feature/properties"
+	"github.com/whosonfirst/go-whosonfirst-iterate/v2/iterator"
+	"github.com/whosonfirst/go-whosonfirst-uri"	
 )
 
 func CompileAirportsData(ctx context.Context, iterator_uri string, iterator_sources ...string) ([]*Airport, error) {

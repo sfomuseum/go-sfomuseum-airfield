@@ -3,10 +3,11 @@ package aircraft
 import (
 	"context"
 	"fmt"
-	"github.com/aaronland/go-roster"
-	"github.com/sfomuseum/go-sfomuseum-airfield"
 	"net/url"
 	"strings"
+
+	"github.com/aaronland/go-roster"
+	"github.com/sfomuseum/go-sfomuseum-airfield"	
 )
 
 type AircraftLookup interface {

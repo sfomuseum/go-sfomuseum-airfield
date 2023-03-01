@@ -3,13 +3,14 @@ package flysfo
 import (
 	"context"
 	"fmt"
-	"github.com/tidwall/gjson"
-	"github.com/whosonfirst/go-whosonfirst-feature/properties"
-	"github.com/whosonfirst/go-whosonfirst-iterate/v2/iterator"
-	"github.com/whosonfirst/go-whosonfirst-uri"
 	"io"
 	"log"
 	"sync"
+
+	"github.com/tidwall/gjson"
+	"github.com/whosonfirst/go-whosonfirst-feature/properties"
+	"github.com/whosonfirst/go-whosonfirst-iterate/v2/iterator"
+	"github.com/whosonfirst/go-whosonfirst-uri"	
 )
 
 func CompileAirlinesData(ctx context.Context, iterator_uri string, iterator_sources ...string) ([]Airline, error) {

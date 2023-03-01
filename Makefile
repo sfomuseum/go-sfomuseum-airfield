@@ -4,13 +4,13 @@ cli:
 	@make cli-stats
 
 cli-create:
-	go build -mod vendor -o bin/create-airline cmd/create-airline/main.go
+	go build -mod vendor -ldflags="-s -w" -o bin/create-airline cmd/create-airline/main.go
 
 cli-lookup:
-	go build -mod vendor -o bin/lookup cmd/lookup/main.go
+	go build -mod vendor -ldflags="-s -w" -o bin/lookup cmd/lookup/main.go
 
 cli-stats:
-	go build -mod vendor -o bin/tailnumbers cmd/tailnumbers/main.go
+	go build -mod vendor -ldflags="-s -w" -o bin/tailnumbers cmd/tailnumbers/main.go
 
 compile:
 	@make compile-airlines
