@@ -20,6 +20,7 @@ func TestSFOMuseumLookup(t *testing.T) {
 		"sfomuseum:aircraft_id=24": 1159289407,
 		"Q3317803":                 1159289407,
 		"wikidata:id=Q3317803":     1159289407,
+		"BCS3": 1813375783,
 	}
 
 	ctx := context.Background()
