@@ -1,11 +1,11 @@
 // tailnumbers is a command line tool to emit the unique set of `swim:tail_number` values from one or more
 // whosonfirst/go-whosonfirst-iterate sources for SFO Museum flight data. For example:
 //
-// 	bin/tailnumbers -iterator-uri /usr/local/data/sfomuseum-data-flights-2021-10/
+//	bin/tailnumbers -iterator-uri /usr/local/data/sfomuseum-data-flights-2021-10/
 //
-// 	bin/tailnumbers -iterator-uri 'repo://?include=properties.flysfo:date=2021-10-07' /usr/local/data/sfomuseum-data-flights-2021-10/
+//	bin/tailnumbers -iterator-uri 'repo://?include=properties.flysfo:date=2021-10-07' /usr/local/data/sfomuseum-data-flights-2021-10/
 //
-// 	bin/tailnumbers -iterator-uri 'repo://?include=properties.flysfo:date=2021-10-07' /usr/local/data/sfomuseum-data-flights-2021-10/
+//	bin/tailnumbers -iterator-uri 'repo://?include=properties.flysfo:date=2021-10-07' /usr/local/data/sfomuseum-data-flights-2021-10/
 package main
 
 import (
@@ -14,7 +14,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/sfomuseum/go-sfomuseum-airfield/flights"	
+	"github.com/sfomuseum/go-sfomuseum-airfield/flights"
 )
 
 func main() {

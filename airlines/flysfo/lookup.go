@@ -14,7 +14,7 @@ import (
 	"sync/atomic"
 
 	"github.com/sfomuseum/go-sfomuseum-airfield/airlines"
-	"github.com/sfomuseum/go-sfomuseum-airfield/data"	
+	"github.com/sfomuseum/go-sfomuseum-airfield/data"
 )
 
 var lookup_table *sync.Map

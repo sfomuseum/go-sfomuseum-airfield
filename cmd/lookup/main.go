@@ -14,7 +14,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/sfomuseum/go-sfomuseum-airfield"	
+	"github.com/sfomuseum/go-sfomuseum-airfield"
 )
 
 func main() {

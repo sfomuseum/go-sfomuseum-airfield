@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/aaronland/go-roster"
-	"github.com/sfomuseum/go-sfomuseum-airfield"	
+	"github.com/sfomuseum/go-sfomuseum-airfield"
 )
 
 type AirlinesLookup interface {

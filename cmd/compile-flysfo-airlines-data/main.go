@@ -10,7 +10,7 @@ import (
 	"os"
 
 	"github.com/sfomuseum/go-sfomuseum-airfield/airlines/flysfo"
-	_ "github.com/whosonfirst/go-whosonfirst-iterate-git/v2"	
+	_ "github.com/whosonfirst/go-whosonfirst-iterate-git/v2"
 )
 
 func main() {

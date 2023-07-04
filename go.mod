@@ -12,7 +12,7 @@ require (
 	github.com/whosonfirst/go-whosonfirst-export/v2 v2.7.0
 	github.com/whosonfirst/go-whosonfirst-feature v0.0.26
 	github.com/whosonfirst/go-whosonfirst-iterate-git/v2 v2.1.3
-	github.com/whosonfirst/go-whosonfirst-iterate/v2 v2.3.2
+	github.com/whosonfirst/go-whosonfirst-iterate/v2 v2.3.4
 	github.com/whosonfirst/go-whosonfirst-uri v1.3.0
 	github.com/whosonfirst/go-writer/v3 v3.1.0
 )
@@ -22,7 +22,7 @@ require (
 	github.com/ProtonMail/go-crypto v0.0.0-20221026131551-cf6655e29de4 // indirect
 	github.com/aaronland/go-artisanal-integers v0.9.1 // indirect
 	github.com/aaronland/go-brooklynintegers-api v1.2.6 // indirect
-	github.com/aaronland/go-json-query v0.1.3 // indirect
+	github.com/aaronland/go-json-query v0.1.4 // indirect
 	github.com/aaronland/go-pool/v2 v2.0.0 // indirect
 	github.com/aaronland/go-string v1.0.0 // indirect
 	github.com/aaronland/go-uid v0.3.0 // indirect
@@ -73,7 +73,7 @@ require (
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
 	go.uber.org/ratelimit v0.2.0 // indirect
 	golang.org/x/crypto v0.3.0 // indirect
-	golang.org/x/net v0.7.0 // indirect
-	golang.org/x/sys v0.5.0 // indirect
+	golang.org/x/net v0.2.0 // indirect
+	golang.org/x/sys v0.3.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 )
