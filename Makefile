@@ -1,4 +1,4 @@
-GOMOD=vendor
+GOMOD=$(shell test -f "go.work" && echo "readonly" || echo "vendor")
 
 cli:
 	@make cli-lookup
