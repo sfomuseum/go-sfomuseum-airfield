@@ -2,7 +2,7 @@ GOMOD=$(shell test -f "go.work" && echo "readonly" || echo "vendor")
 
 cli:
 	@make cli-lookup
-	# @make cli-create
+	@make cli-create
 	@make cli-stats
 
 cli-create:
