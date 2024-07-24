@@ -2,8 +2,6 @@ module github.com/sfomuseum/go-sfomuseum-airfield
 
 go 1.22.1
 
-toolchain go1.22.4
-
 require (
 	github.com/aaronland/go-roster v1.0.0
 	github.com/sfomuseum/go-flags v0.10.0
