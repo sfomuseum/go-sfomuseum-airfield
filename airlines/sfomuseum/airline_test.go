@@ -11,6 +11,8 @@ func TestFindCurrentAirline(t *testing.T) {
 		"AC":         1159283597,
 		"ACA":        1159283597,
 		"AIR CANADA": 1159283597,
+		"YP": 1930448549,
+		"W1": 1930448553,
 	}
 
 	ctx := context.Background()
