@@ -13,6 +13,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"log/slog"
 
 	"github.com/sfomuseum/go-sfomuseum-airfield"
 )
@@ -20,8 +21,14 @@ import (
 func main() {
 
 	lookup_uri := flag.String("lookup-uri", "", "...")
+	verbose := flag.Bool("verbose", false, "Enable verbose (debug) logging")
 
 	flag.Parse()
+
+	if *verbose {
+		slog.SetLogLoggerLevel(slog.LevelDebug)
+		slog.Debug("Verbose logging enabled")
+	}
 
 	ctx := context.Background()
 	lookup, err := airfield.NewLookup(ctx, *lookup_uri)

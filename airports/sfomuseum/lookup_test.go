@@ -21,6 +21,8 @@ func TestSFOMuseumLookup(t *testing.T) {
 		"wof:id=102533269":         102533269,
 		"COS":                      102526247,
 		"CEB":                      102553239,
+		"KRIC":                     102532729,
+		"YBBN":                     102557775,
 	}
 
 	ctx := context.Background()

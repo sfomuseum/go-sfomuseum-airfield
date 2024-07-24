@@ -10,6 +10,8 @@ func TestFindCurrentAirport(t *testing.T) {
 	tests := map[string]int64{
 		"YUL":  102554351,
 		"EGLL": 102556703,
+		"KRIC": 102532729,
+		"YBBN": 102557775,
 	}
 
 	ctx := context.Background()

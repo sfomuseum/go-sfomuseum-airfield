@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -74,9 +75,13 @@ func NewSFOMuseumLookup(ctx context.Context, uri string) (airports.AirportsLooku
 		iterator_uri := q.Get("uri")
 		iterator_sources := q["source"]
 
+		slog.Debug("Create new airports lookup from iterator", "uri", iterator_uri, "sources", iterator_sources)
+
 		return NewSFOMuseumLookupFromIterator(ctx, iterator_uri, iterator_sources...)
 
 	case "github":
+
+		slog.Debug("Create new airports lookup from github", "uri", DATA_GITHUB)
 
 		rsp, err := http.Get(DATA_GITHUB)
 
@@ -88,6 +93,8 @@ func NewSFOMuseumLookup(ctx context.Context, uri string) (airports.AirportsLooku
 		return NewSFOMuseumLookupWithLookupFunc(ctx, lookup_func)
 
 	default:
+
+		slog.Debug("Create new airports lookup from embed", "uri", DATA_JSON)
 
 		fs := data.FS
 		fh, err := fs.Open(DATA_JSON)

@@ -32,6 +32,7 @@ compile-airlines:
 
 compile-airports:
 	go run -mod $(GOMOD) cmd/compile-sfomuseum-airports-data/main.go \
+		-verbose \
 		-iterator-uri 'git:///tmp?include=properties.sfomuseum:placetype=airport&exclude=properties.edtf:deprecated=.*' \
 		https://github.com/sfomuseum-data/sfomuseum-data-whosonfirst.git
 

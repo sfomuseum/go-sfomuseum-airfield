@@ -3,6 +3,7 @@ package airports
 import (
 	"context"
 	"fmt"
+	"log/slog"
 	"net/url"
 	"strings"
 
@@ -41,6 +42,7 @@ func newLookup(ctx context.Context, uri string) (airfield.Lookup, error) {
 		u.Path = strings.Join(p[1:], "/")
 	}
 
+	slog.Debug("Create new airports lookup", "input uri", uri, "final uri", u.String())
 	return NewAirportsLookup(ctx, u.String())
 }
 

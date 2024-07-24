@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io"
-	_ "log"
+	"log/slog"
 	"sync"
 
 	"github.com/tidwall/gjson"
@@ -19,6 +19,9 @@ func CompileAirportsData(ctx context.Context, iterator_uri string, iterator_sour
 	mu := new(sync.RWMutex)
 
 	iter_cb := func(ctx context.Context, path string, fh io.ReadSeeker, args ...interface{}) error {
+
+		logger := slog.Default()
+		logger = logger.With("path", path)
 
 		select {
 		case <-ctx.Done():
@@ -46,6 +49,7 @@ func CompileAirportsData(ctx context.Context, iterator_uri string, iterator_sour
 		pt_rsp := gjson.GetBytes(body, "properties.sfomuseum:placetype")
 
 		if pt_rsp.String() != "airport" {
+			slog.Info("Skipping record because it is not an airport", "placetype", pt_rsp.String())
 			return nil
 		}
 
@@ -109,6 +113,7 @@ func CompileAirportsData(ctx context.Context, iterator_uri string, iterator_sour
 		lookup = append(lookup, a)
 		mu.Unlock()
 
+		logger.Debug("Add record", "wof id", wof_id, "iata code", a.IATACode, "icao code", a.ICAOCode, "is current", a.IsCurrent)
 		return nil
 	}
 
