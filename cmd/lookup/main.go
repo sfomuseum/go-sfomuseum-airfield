@@ -1,19 +1,17 @@
 package main
 
 import (
-	_ "github.com/sfomuseum/go-sfomuseum-airfield/aircraft/icao"
-	_ "github.com/sfomuseum/go-sfomuseum-airfield/aircraft/sfomuseum"
-	_ "github.com/sfomuseum/go-sfomuseum-airfield/airlines/flysfo"
-	_ "github.com/sfomuseum/go-sfomuseum-airfield/airlines/sfomuseum"
-	_ "github.com/sfomuseum/go-sfomuseum-airfield/airports/sfomuseum"
-)
-
-import (
 	"context"
 	"flag"
 	"fmt"
 	"log"
 	"log/slog"
+
+	_ "github.com/sfomuseum/go-sfomuseum-airfield/aircraft/icao"
+	_ "github.com/sfomuseum/go-sfomuseum-airfield/aircraft/sfomuseum"
+	_ "github.com/sfomuseum/go-sfomuseum-airfield/airlines/flysfo"
+	_ "github.com/sfomuseum/go-sfomuseum-airfield/airlines/sfomuseum"
+	_ "github.com/sfomuseum/go-sfomuseum-airfield/airports/sfomuseum"
 
 	"github.com/sfomuseum/go-sfomuseum-airfield"
 )
