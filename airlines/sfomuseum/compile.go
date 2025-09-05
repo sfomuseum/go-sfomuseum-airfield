@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"io"
-	_ "log"
 	"sync"
 
 	"github.com/tidwall/gjson"

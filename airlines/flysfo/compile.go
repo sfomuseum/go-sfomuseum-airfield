@@ -123,9 +123,8 @@ func CompileAirlinesData(ctx context.Context, iterator_uri string, iterator_sour
 		}
 
 		mu.Lock()
-		defer mu.Unlock()
-
 		lookup = append(lookup, a)
+		mu.Unlock()
 	}
 
 	return lookup, nil
