@@ -11,12 +11,12 @@ import (
 	"log"
 
 	"github.com/sfomuseum/go-flags/flagset"
-	sfom_reader "github.com/sfomuseum/go-sfomuseum-reader"
 	sfom_writer "github.com/sfomuseum/go-sfomuseum-writer/v3"
 	"github.com/tidwall/gjson"
-	"github.com/whosonfirst/go-reader"
-	"github.com/whosonfirst/go-whosonfirst-export/v2"
+	"github.com/whosonfirst/go-reader/v2"
+	"github.com/whosonfirst/go-whosonfirst-export/v3"
 	"github.com/whosonfirst/go-whosonfirst-feature/properties"
+	wof_reader "github.com/whosonfirst/go-whosonfirst-reader/v2"
 	"github.com/whosonfirst/go-whosonfirst-uri"
 	"github.com/whosonfirst/go-writer/v3"
 )
@@ -100,7 +100,7 @@ func main() {
 			log.Fatalf("Failed to create new (parent) reader, %v", err)
 		}
 
-		parent_body, err := sfom_reader.LoadBytesFromID(ctx, parent_r, *parent_id)
+		parent_body, err := wof_reader.LoadBytes(ctx, parent_r, *parent_id)
 
 		if err != nil {
 			log.Fatalf("Failed to load parent (%d) from reader, %v", *parent_id, err)

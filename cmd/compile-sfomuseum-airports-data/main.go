@@ -10,8 +10,9 @@ import (
 	"log/slog"
 	"os"
 
+	_ "github.com/whosonfirst/go-whosonfirst-iterate-git/v3"
+
 	"github.com/sfomuseum/go-sfomuseum-airfield/airports/sfomuseum"
-	_ "github.com/whosonfirst/go-whosonfirst-iterate-git/v2"
 )
 
 func main() {

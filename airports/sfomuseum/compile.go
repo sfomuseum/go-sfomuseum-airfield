@@ -9,7 +9,7 @@ import (
 
 	"github.com/tidwall/gjson"
 	"github.com/whosonfirst/go-whosonfirst-feature/properties"
-	"github.com/whosonfirst/go-whosonfirst-iterate/v2/iterator"
+	"github.com/whosonfirst/go-whosonfirst-iterate/v3"
 	"github.com/whosonfirst/go-whosonfirst-uri"
 )
 
@@ -18,57 +18,69 @@ func CompileAirportsData(ctx context.Context, iterator_uri string, iterator_sour
 	lookup := make([]*Airport, 0)
 	mu := new(sync.RWMutex)
 
-	iter_cb := func(ctx context.Context, path string, fh io.ReadSeeker, args ...interface{}) error {
+	iter, err := iterate.NewIterator(ctx, iterator_uri)
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to create iterator, %w", err)
+	}
+
+	for rec, err := range iter.Iterate(ctx, iterator_sources...) {
+
+		if err != nil {
+			return nil, err
+		}
+
+		defer rec.Body.Close()
 
 		logger := slog.Default()
-		logger = logger.With("path", path)
+		logger = logger.With("path", rec.Path)
 
 		select {
 		case <-ctx.Done():
-			return nil
+			continue
 		default:
 			// pass
 		}
 
-		_, uri_args, err := uri.ParseURI(path)
+		_, uri_args, err := uri.ParseURI(rec.Path)
 
 		if err != nil {
-			return fmt.Errorf("Failed to parse %s, %w", path, err)
+			return nil, fmt.Errorf("Failed to parse %s, %w", rec.Path, err)
 		}
 
 		if uri_args.IsAlternate {
-			return nil
+			continue
 		}
 
-		body, err := io.ReadAll(fh)
+		body, err := io.ReadAll(rec.Body)
 
 		if err != nil {
-			return fmt.Errorf("Failed to read %s, %w", path, err)
+			return nil, fmt.Errorf("Failed to read %s, %w", rec.Path, err)
 		}
 
 		pt_rsp := gjson.GetBytes(body, "properties.sfomuseum:placetype")
 
 		if pt_rsp.String() != "airport" {
 			slog.Info("Skipping record because it is not an airport", "placetype", pt_rsp.String())
-			return nil
+			continue
 		}
 
 		wof_id, err := properties.Id(body)
 
 		if err != nil {
-			return fmt.Errorf("Failed to derive ID for %s, %w", path, err)
+			return nil, fmt.Errorf("Failed to derive ID for %s, %w", rec.Path, err)
 		}
 
 		wof_name, err := properties.Name(body)
 
 		if err != nil {
-			return fmt.Errorf("Failed to derive name for %s, %w", path, err)
+			return nil, fmt.Errorf("Failed to derive name for %s, %w", rec.Path, err)
 		}
 
 		fl, err := properties.IsCurrent(body)
 
 		if err != nil {
-			return fmt.Errorf("Failed to determine is current for %s, %v", path, err)
+			return nil, fmt.Errorf("Failed to determine is current for %s, %v", rec.Path, err)
 		}
 
 		sfom_id := int64(-1)
@@ -114,19 +126,6 @@ func CompileAirportsData(ctx context.Context, iterator_uri string, iterator_sour
 		mu.Unlock()
 
 		logger.Debug("Add record", "wof id", wof_id, "iata code", a.IATACode, "icao code", a.ICAOCode, "is current", a.IsCurrent)
-		return nil
-	}
-
-	iter, err := iterator.NewIterator(ctx, iterator_uri, iter_cb)
-
-	if err != nil {
-		return nil, fmt.Errorf("Failed to create iterator, %w", err)
-	}
-
-	err = iter.IterateURIs(ctx, iterator_sources...)
-
-	if err != nil {
-		return nil, fmt.Errorf("Failed to iterate sources, %w", err)
 	}
 
 	return lookup, nil
