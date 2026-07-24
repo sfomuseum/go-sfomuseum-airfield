@@ -2,6 +2,10 @@
 
 Go package for working with airfield-related activities at SFO Museum (airlines, aircraft, airports).
 
+## Deprecation Notice
+
+This package has been deprecated. Please use [sfomuseum/go-sfomuseum/airfield](https://github.com/sfomuseum/go-sfomuseum) instead.
+
 ## Documentation
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/sfomuseum/go-sfomuseum-airfield.svg)](https://pkg.go.dev/github.com/sfomuseum/go-sfomuseum-airfield)
